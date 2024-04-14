@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xyz.game.mapper.GameMapper">
+    <resultMap id="GameInfo" type="xyz.game.domain.Game">
+        <result column="game_id" property="id" />
+        <result column="game_code" property="code" />
+        <result column="game_name" property="name" />
+        <result column="game_img" property="img" />
+    </resultMap>
+
+    <select id="getList" resultMap="GameInfo">
+        select
+            *
+        from game_info
+    </select>
+
+</mapper>
