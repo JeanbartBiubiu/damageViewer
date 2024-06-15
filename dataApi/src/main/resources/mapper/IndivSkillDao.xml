@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.IndivSkillDao">
+
+    <resultMap type="xyz.game.entity.IndivSkill" id="IndivSkillMap">
+        <result property="indivId" column="indiv_id" jdbcType="INTEGER"/>
+        <result property="skillId" column="skill_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into default_table.indiv_skill(indiv_idskill_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.indivId}#{entity.skillId})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into default_table.indiv_skill(indiv_idskill_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.indivId}#{entity.skillId})
+        </foreach>
+        on duplicate key update
+indiv_id = values(indiv_id) skill_id = values(skill_id)     </insert>
+
+</mapper>
+

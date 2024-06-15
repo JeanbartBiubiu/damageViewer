@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.LanguageDao">
+
+    <resultMap type="xyz.game.entity.Language" id="LanguageMap">
+        <result property="languageId" column="language_id" jdbcType="INTEGER"/>
+        <result property="languageName" column="language_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="languageId" useGeneratedKeys="true">
+        insert into default_table.language(language_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.languageName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="languageId" useGeneratedKeys="true">
+        insert into default_table.language(language_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.languageName})
+        </foreach>
+        on duplicate key update
+language_name = values(language_name)     </insert>
+
+</mapper>
+

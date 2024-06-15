@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.IndivNameDao">
+
+    <resultMap type="xyz.game.entity.IndivName" id="IndivNameMap">
+        <result property="indivId" column="indiv_id" jdbcType="INTEGER"/>
+        <result property="languageId" column="language_id" jdbcType="INTEGER"/>
+        <result property="indivName" column="indiv_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="indivId" useGeneratedKeys="true">
+        insert into default_table.indiv_name(indiv_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.indivName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="indivId" useGeneratedKeys="true">
+        insert into default_table.indiv_name(indiv_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.indivName})
+        </foreach>
+        on duplicate key update
+indiv_name = values(indiv_name)     </insert>
+
+</mapper>
+

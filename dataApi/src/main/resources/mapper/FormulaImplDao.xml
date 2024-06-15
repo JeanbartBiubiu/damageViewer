@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.FormulaImplDao">
+
+    <resultMap type="xyz.game.entity.FormulaImpl" id="FormulaImplMap">
+        <result property="attributeId" column="attribute_id" jdbcType="INTEGER"/>
+        <result property="formulaId" column="formula_id" jdbcType="INTEGER"/>
+        <result property="formulaImpl" column="formula_impl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into default_table.formula_impl(attribute_idformula_idformula_impl)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.attributeId}#{entity.formulaId}#{entity.formulaImpl})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into default_table.formula_impl(attribute_idformula_idformula_impl)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.attributeId}#{entity.formulaId}#{entity.formulaImpl})
+        </foreach>
+        on duplicate key update
+attribute_id = values(attribute_id) formula_id = values(formula_id) formula_impl = values(formula_impl)     </insert>
+
+</mapper>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.IndividualDao">
+
+    <resultMap type="xyz.game.entity.Individual" id="IndividualMap">
+        <result property="indivId" column="indiv_id" jdbcType="INTEGER"/>
+        <result property="indivImg" column="indiv_img" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="indivId" useGeneratedKeys="true">
+        insert into default_table.individual(indiv_img)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.indivImg})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="indivId" useGeneratedKeys="true">
+        insert into default_table.individual(indiv_img)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.indivImg})
+        </foreach>
+        on duplicate key update
+indiv_img = values(indiv_img)     </insert>
+
+</mapper>
+

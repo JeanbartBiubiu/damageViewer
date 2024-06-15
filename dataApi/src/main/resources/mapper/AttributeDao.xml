@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.AttributeDao">
+
+    <resultMap type="xyz.game.entity.Attribute" id="AttributeMap">
+        <result property="attributeId" column="attribute_id" jdbcType="INTEGER"/>
+        <result property="attributeImg" column="attribute_img" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="attributeId" useGeneratedKeys="true">
+        insert into default_table.attribute(attribute_img)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.attributeImg})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="attributeId" useGeneratedKeys="true">
+        insert into default_table.attribute(attribute_img)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.attributeImg})
+        </foreach>
+        on duplicate key update
+attribute_img = values(attribute_img)     </insert>
+
+</mapper>
+

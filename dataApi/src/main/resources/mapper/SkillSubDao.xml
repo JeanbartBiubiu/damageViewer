@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.SkillSubDao">
+
+    <resultMap type="xyz.game.entity.SkillSub" id="SkillSubMap">
+        <result property="skillId" column="skill_id" jdbcType="INTEGER"/>
+        <result property="skillLevle" column="skill_levle" jdbcType="INTEGER"/>
+        <result property="cycleId" column="cycle_id" jdbcType="INTEGER"/>
+        <result property="consumption" column="consumption" jdbcType="VARCHAR"/>
+        <result property="cd" column="cd" jdbcType="VARCHAR"/>
+        <result property="checkAndDo" column="check_and_do" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="skillId" useGeneratedKeys="true">
+        insert into default_table.skill_sub(consumptioncdcheck_and_do)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.consumption}#{entity.cd}#{entity.checkAndDo})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="skillId" useGeneratedKeys="true">
+        insert into default_table.skill_sub(consumptioncdcheck_and_do)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.consumption}#{entity.cd}#{entity.checkAndDo})
+        </foreach>
+        on duplicate key update
+consumption = values(consumption) cd = values(cd) check_and_do = values(check_and_do)     </insert>
+
+</mapper>
+

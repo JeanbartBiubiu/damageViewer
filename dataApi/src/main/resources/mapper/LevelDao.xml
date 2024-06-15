@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.LevelDao">
+
+    <resultMap type="xyz.game.entity.Level" id="LevelMap">
+        <result property="levelId" column="level_id" jdbcType="INTEGER"/>
+        <result property="languageId" column="language_id" jdbcType="INTEGER"/>
+        <result property="levelName" column="level_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="levelId" useGeneratedKeys="true">
+        insert into default_table.level(level_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.levelName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="levelId" useGeneratedKeys="true">
+        insert into default_table.level(level_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.levelName})
+        </foreach>
+        on duplicate key update
+level_name = values(level_name)     </insert>
+
+</mapper>
+

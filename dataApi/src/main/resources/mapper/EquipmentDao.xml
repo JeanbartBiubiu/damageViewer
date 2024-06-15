@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.EquipmentDao">
+
+    <resultMap type="xyz.game.entity.Equipment" id="EquipmentMap">
+        <result property="equipId" column="equip_id" jdbcType="INTEGER"/>
+        <result property="equipImg" column="equip_img" jdbcType="VARCHAR"/>
+        <result property="consumption" column="consumption" jdbcType="INTEGER"/>
+        <result property="attributeExpression" column="attribute_expression" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="equipId" useGeneratedKeys="true">
+        insert into default_table.equipment(equip_imgconsumptionattribute_expression)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.equipImg}#{entity.consumption}#{entity.attributeExpression})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="equipId" useGeneratedKeys="true">
+        insert into default_table.equipment(equip_imgconsumptionattribute_expression)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.equipImg}#{entity.consumption}#{entity.attributeExpression})
+        </foreach>
+        on duplicate key update
+equip_img = values(equip_img) consumption = values(consumption) attribute_expression = values(attribute_expression)     </insert>
+
+</mapper>
+

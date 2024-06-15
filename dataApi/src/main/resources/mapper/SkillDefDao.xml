@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.SkillDefDao">
+
+    <resultMap type="xyz.game.entity.SkillDef" id="SkillDefMap">
+        <result property="skillId" column="skill_id" jdbcType="INTEGER"/>
+        <result property="skillName" column="skill_name" jdbcType="VARCHAR"/>
+        <result property="skillImg" column="skill_img" jdbcType="VARCHAR"/>
+        <result property="skillType" column="skill_type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="skillId" useGeneratedKeys="true">
+        insert into default_table.skill_def(skill_nameskill_imgskill_type)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.skillName}#{entity.skillImg}#{entity.skillType})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="skillId" useGeneratedKeys="true">
+        insert into default_table.skill_def(skill_nameskill_imgskill_type)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.skillName}#{entity.skillImg}#{entity.skillType})
+        </foreach>
+        on duplicate key update
+skill_name = values(skill_name) skill_img = values(skill_img) skill_type = values(skill_type)     </insert>
+
+</mapper>
+

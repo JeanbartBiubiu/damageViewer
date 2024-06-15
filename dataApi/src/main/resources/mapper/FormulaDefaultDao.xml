@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.game.dao.FormulaDefaultDao">
+
+    <resultMap type="xyz.game.entity.FormulaDefault" id="FormulaDefaultMap">
+        <result property="formulaId" column="formula_id" jdbcType="INTEGER"/>
+        <result property="formulaType" column="formula_type" jdbcType="VARCHAR"/>
+        <result property="default" column="default" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="formulaId" useGeneratedKeys="true">
+        insert into default_table.formula_default(default)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.default})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="formulaId" useGeneratedKeys="true">
+        insert into default_table.formula_default(default)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.default})
+        </foreach>
+        on duplicate key update
+default = values(default)     </insert>
+
+</mapper>
+
