@@ -10,23 +10,107 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 批量插入 -->
+    <!--查询单个-->
+    <select id="queryById" resultMap="ComputingLifeCycleMap">
+        select
+cycle_idordertypecodename
+        from ${whichGame}.computing_life_cycle
+        where cycle_id = #{cycleId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ComputingLifeCycleMap">
+        select
+cycle_idordertypecodename
+        from ${whichGame}.computing_life_cycle
+        <where>
+            <if test="cycleId != null">
+                and cycle_id = #{cycleId}
+            </if>
+            <if test="order != null">
+                and order = #{order}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ${whichGame}.computing_life_cycle
+        <where>
+            <if test="cycleId != null">
+                and cycle_id = #{cycleId}
+            </if>
+            <if test="order != null">
+                and order = #{order}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cycleId" useGeneratedKeys="true">
+        insert into ${whichGame}.computing_life_cycle(ordercodename)
+        values (#{order}#{code}#{name})
+    </insert>
+
     <insert id="insertBatch" keyProperty="cycleId" useGeneratedKeys="true">
-        insert into default_table.computing_life_cycle(ordercodename)
+        insert into ${whichGame}.computing_life_cycle(ordercodename)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.order}#{entity.code}#{entity.name})
         </foreach>
     </insert>
-    <!-- 批量插入或按主键更新 -->
+
     <insert id="insertOrUpdateBatch" keyProperty="cycleId" useGeneratedKeys="true">
-        insert into default_table.computing_life_cycle(ordercodename)
+        insert into ${whichGame}.computing_life_cycle(ordercodename)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.order}#{entity.code}#{entity.name})
         </foreach>
         on duplicate key update
-order = values(order) code = values(code) name = values(name)     </insert>
+order = values(order)code = values(code)name = values(name)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ${whichGame}.computing_life_cycle
+        <set>
+            <if test="order != null">
+                order = #{order},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+        </set>
+        where cycle_id = #{cycleId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ${whichGame}.computing_life_cycle where cycle_id = #{cycleId}
+    </delete>
 
 </mapper>
 

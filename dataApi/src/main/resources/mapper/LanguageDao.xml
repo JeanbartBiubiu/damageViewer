@@ -7,23 +7,83 @@
         <result property="languageName" column="language_name" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 批量插入 -->
+    <!--查询单个-->
+    <select id="queryById" resultMap="LanguageMap">
+        select
+language_idlanguage_name
+        from ${whichGame}.language
+        where language_id = #{languageId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LanguageMap">
+        select
+language_idlanguage_name
+        from ${whichGame}.language
+        <where>
+            <if test="languageId != null">
+                and language_id = #{languageId}
+            </if>
+            <if test="languageName != null and languageName != ''">
+                and language_name = #{languageName}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ${whichGame}.language
+        <where>
+            <if test="languageId != null">
+                and language_id = #{languageId}
+            </if>
+            <if test="languageName != null and languageName != ''">
+                and language_name = #{languageName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="languageId" useGeneratedKeys="true">
+        insert into ${whichGame}.language(language_name)
+        values (#{languageName})
+    </insert>
+
     <insert id="insertBatch" keyProperty="languageId" useGeneratedKeys="true">
-        insert into default_table.language(language_name)
+        insert into ${whichGame}.language(language_name)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.languageName})
         </foreach>
     </insert>
-    <!-- 批量插入或按主键更新 -->
+
     <insert id="insertOrUpdateBatch" keyProperty="languageId" useGeneratedKeys="true">
-        insert into default_table.language(language_name)
+        insert into ${whichGame}.language(language_name)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.languageName})
         </foreach>
         on duplicate key update
-language_name = values(language_name)     </insert>
+language_name = values(language_name)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ${whichGame}.language
+        <set>
+            <if test="languageName != null and languageName != ''">
+                language_name = #{languageName},
+            </if>
+        </set>
+        where language_id = #{languageId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ${whichGame}.language where language_id = #{languageId}
+    </delete>
 
 </mapper>
 

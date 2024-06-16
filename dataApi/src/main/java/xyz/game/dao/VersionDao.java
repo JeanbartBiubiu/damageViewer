@@ -1,35 +1,83 @@
 package xyz.game.dao;
 
-import java.util.List;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import xyz.game.entity.Version;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 /**
  * 版本记录(Version)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-16 16:37:05
  */
-public interface VersionDao extends BaseMapper<Version> {
+public interface VersionDao {
 
-/**
-* 批量新增数据（MyBatis原生foreach方法）
-*
-* @param entities List<Version> 实例对象列表
-* @return 影响行数
-*/
-int insertBatch(@Param("entities") List<Version> entities);
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param versionId 主键
+     * @return 实例对象
+     */
+    Version queryById(Integer versionId);
 
-/**
-* 批量新增或按主键更新数据（MyBatis原生foreach方法）
-*
-* @param entities List<Version> 实例对象列表
-* @return 影响行数
-* @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-*/
-int insertOrUpdateBatch(@Param("entities") List<Version> entities);
+    /**
+     * 查询指定行数据
+     *
+     * @param version 查询条件
+     * @param pageable         分页对象
+     * @return 对象列表
+     */
+    List<Version> queryAllByLimit(Version version, @Param("pageable") Pageable pageable);
+
+    /**
+     * 统计总行数
+     *
+     * @param version 查询条件
+     * @return 总行数
+     */
+    long count(Version version);
+
+    /**
+     * 新增数据
+     *
+     * @param version 实例对象
+     * @return 影响行数
+     */
+    int insert(Version version);
+
+    /**
+     * 批量新增数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<Version> 实例对象列表
+     * @return 影响行数
+     */
+    int insertBatch(@Param("entities") List<Version> entities);
+
+    /**
+     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<Version> 实例对象列表
+     * @return 影响行数
+     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+     */
+    int insertOrUpdateBatch(@Param("entities") List<Version> entities);
+
+    /**
+     * 修改数据
+     *
+     * @param version 实例对象
+     * @return 影响行数
+     */
+    int update(Version version);
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param versionId 主键
+     * @return 影响行数
+     */
+    int deleteById(Integer versionId);
 
 }
 

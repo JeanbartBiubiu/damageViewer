@@ -9,23 +9,101 @@
         <result property="attributeExpression" column="attribute_expression" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 批量插入 -->
+    <!--查询单个-->
+    <select id="queryById" resultMap="EquipmentMap">
+        select
+equip_idequip_imgconsumptionattribute_expression
+        from ${whichGame}.equipment
+        where equip_id = #{equipId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EquipmentMap">
+        select
+equip_idequip_imgconsumptionattribute_expression
+        from ${whichGame}.equipment
+        <where>
+            <if test="equipId != null">
+                and equip_id = #{equipId}
+            </if>
+            <if test="equipImg != null and equipImg != ''">
+                and equip_img = #{equipImg}
+            </if>
+            <if test="consumption != null">
+                and consumption = #{consumption}
+            </if>
+            <if test="attributeExpression != null and attributeExpression != ''">
+                and attribute_expression = #{attributeExpression}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ${whichGame}.equipment
+        <where>
+            <if test="equipId != null">
+                and equip_id = #{equipId}
+            </if>
+            <if test="equipImg != null and equipImg != ''">
+                and equip_img = #{equipImg}
+            </if>
+            <if test="consumption != null">
+                and consumption = #{consumption}
+            </if>
+            <if test="attributeExpression != null and attributeExpression != ''">
+                and attribute_expression = #{attributeExpression}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="equipId" useGeneratedKeys="true">
+        insert into ${whichGame}.equipment(equip_imgconsumptionattribute_expression)
+        values (#{equipImg}#{consumption}#{attributeExpression})
+    </insert>
+
     <insert id="insertBatch" keyProperty="equipId" useGeneratedKeys="true">
-        insert into default_table.equipment(equip_imgconsumptionattribute_expression)
+        insert into ${whichGame}.equipment(equip_imgconsumptionattribute_expression)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.equipImg}#{entity.consumption}#{entity.attributeExpression})
         </foreach>
     </insert>
-    <!-- 批量插入或按主键更新 -->
+
     <insert id="insertOrUpdateBatch" keyProperty="equipId" useGeneratedKeys="true">
-        insert into default_table.equipment(equip_imgconsumptionattribute_expression)
+        insert into ${whichGame}.equipment(equip_imgconsumptionattribute_expression)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.equipImg}#{entity.consumption}#{entity.attributeExpression})
         </foreach>
         on duplicate key update
-equip_img = values(equip_img) consumption = values(consumption) attribute_expression = values(attribute_expression)     </insert>
+equip_img = values(equip_img)consumption = values(consumption)attribute_expression = values(attribute_expression)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ${whichGame}.equipment
+        <set>
+            <if test="equipImg != null and equipImg != ''">
+                equip_img = #{equipImg},
+            </if>
+            <if test="consumption != null">
+                consumption = #{consumption},
+            </if>
+            <if test="attributeExpression != null and attributeExpression != ''">
+                attribute_expression = #{attributeExpression},
+            </if>
+        </set>
+        where equip_id = #{equipId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ${whichGame}.equipment where equip_id = #{equipId}
+    </delete>
 
 </mapper>
 

@@ -8,23 +8,89 @@
         <result property="attributeName" column="attribute_name" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 批量插入 -->
+    <!--查询单个-->
+    <select id="queryById" resultMap="AttributeNameMap">
+        select
+attribute_idlanguage_idattribute_name
+        from ${whichGame}.attribute_name
+        where attribute_id = #{attributeId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AttributeNameMap">
+        select
+attribute_idlanguage_idattribute_name
+        from ${whichGame}.attribute_name
+        <where>
+            <if test="attributeId != null">
+                and attribute_id = #{attributeId}
+            </if>
+            <if test="languageId != null">
+                and language_id = #{languageId}
+            </if>
+            <if test="attributeName != null and attributeName != ''">
+                and attribute_name = #{attributeName}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ${whichGame}.attribute_name
+        <where>
+            <if test="attributeId != null">
+                and attribute_id = #{attributeId}
+            </if>
+            <if test="languageId != null">
+                and language_id = #{languageId}
+            </if>
+            <if test="attributeName != null and attributeName != ''">
+                and attribute_name = #{attributeName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="attributeId" useGeneratedKeys="true">
+        insert into ${whichGame}.attribute_name(attribute_name)
+        values (#{attributeName})
+    </insert>
+
     <insert id="insertBatch" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into default_table.attribute_name(attribute_name)
+        insert into ${whichGame}.attribute_name(attribute_name)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.attributeName})
         </foreach>
     </insert>
-    <!-- 批量插入或按主键更新 -->
+
     <insert id="insertOrUpdateBatch" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into default_table.attribute_name(attribute_name)
+        insert into ${whichGame}.attribute_name(attribute_name)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.attributeName})
         </foreach>
         on duplicate key update
-attribute_name = values(attribute_name)     </insert>
+attribute_name = values(attribute_name)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ${whichGame}.attribute_name
+        <set>
+            <if test="attributeName != null and attributeName != ''">
+                attribute_name = #{attributeName},
+            </if>
+        </set>
+        where attribute_id = #{attributeId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ${whichGame}.attribute_name where attribute_id = #{attributeId}
+    </delete>
 
 </mapper>
 

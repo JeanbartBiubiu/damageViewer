@@ -1,19 +1,82 @@
 package xyz.game.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import xyz.game.dao.EquipmentDao;
 import xyz.game.entity.Equipment;
+import xyz.game.dao.EquipmentDao;
 import xyz.game.service.EquipmentService;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import javax.annotation.Resource;
 
 /**
  * 装备表(buff等状态效果也定义为装备)(Equipment)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-15 19:17:13
  */
 @Service("equipmentService")
-public class EquipmentServiceImpl extends ServiceImpl<EquipmentDao, Equipment> implements EquipmentService {
+public class EquipmentServiceImpl implements EquipmentService {
+    @Resource
+    private EquipmentDao equipmentDao;
 
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param equipId 主键
+     * @return 实例对象
+     */
+    @Override
+    public Equipment queryById(Integer equipId) {
+        return this.equipmentDao.queryById(equipId);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param equipment 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
+     */
+    @Override
+    public Page<Equipment> queryByPage(Equipment equipment, PageRequest pageRequest) {
+        long total = this.equipmentDao.count(equipment);
+        return new PageImpl<>(this.equipmentDao.queryAllByLimit(equipment, pageRequest), pageRequest, total);
+    }
+
+    /**
+     * 新增数据
+     *
+     * @param equipment 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public Equipment insert(Equipment equipment) {
+        this.equipmentDao.insert(equipment);
+        return equipment;
+    }
+
+    /**
+     * 修改数据
+     *
+     * @param equipment 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public Equipment update(Equipment equipment) {
+        this.equipmentDao.update(equipment);
+        return this.queryById(equipment.getEquipId());
+    }
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param equipId 主键
+     * @return 是否成功
+     */
+    @Override
+    public boolean deleteById(Integer equipId) {
+        return this.equipmentDao.deleteById(equipId) > 0;
+    }
 }
-

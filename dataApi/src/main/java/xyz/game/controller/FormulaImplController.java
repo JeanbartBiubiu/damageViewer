@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.FormulaImpl;
 import xyz.game.service.FormulaImplService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * (FormulaImpl)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-15 19:17:13
  */
 @RestController
 @RequestMapping("formulaImpl")
-public class FormulaImplController extends ApiController {
+public class FormulaImplController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class FormulaImplController extends ApiController {
     private FormulaImplService formulaImplService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param formulaImpl 查询实体
-     * @return 所有数据
+     * @param formulaImpl 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<FormulaImpl> page, FormulaImpl formulaImpl) {
-        return success(this.formulaImplService.page(page, new QueryWrapper<>(formulaImpl)));
+    public ResponseEntity<Page<FormulaImpl>> queryByPage(FormulaImpl formulaImpl, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.formulaImplService.queryByPage(formulaImpl, pageRequest));
     }
 
     /**
@@ -48,41 +43,42 @@ public class FormulaImplController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.formulaImplService.getById(id));
+    public ResponseEntity<FormulaImpl> queryById(@PathVariable("id") int id) {
+        return ResponseEntity.ok(this.formulaImplService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param formulaImpl 实体对象
+     * @param formulaImpl 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody FormulaImpl formulaImpl) {
-        return success(this.formulaImplService.save(formulaImpl));
+    public ResponseEntity<FormulaImpl> add(FormulaImpl formulaImpl) {
+        return ResponseEntity.ok(this.formulaImplService.insert(formulaImpl));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param formulaImpl 实体对象
-     * @return 修改结果
+     * @param formulaImpl 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody FormulaImpl formulaImpl) {
-        return success(this.formulaImplService.updateById(formulaImpl));
+    public ResponseEntity<FormulaImpl> edit(FormulaImpl formulaImpl) {
+        return ResponseEntity.ok(this.formulaImplService.update(formulaImpl));
     }
 
     /**
      * 删除数据
      *
-     * @param idList 主键结合
-     * @return 删除结果
+     * @param id 主键
+     * @return 删除是否成功
      */
     @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.formulaImplService.removeByIds(idList));
+    public ResponseEntity<Boolean> deleteById(int id) {
+        return ResponseEntity.ok(this.formulaImplService.deleteById(id));
     }
+
 }
 

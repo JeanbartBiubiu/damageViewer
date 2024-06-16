@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * (FormulaImpl)表实体类
+ * (FormulaImpl)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class FormulaImpl extends Model<FormulaImpl> {
+public class FormulaImpl implements Serializable {
+    private static final long serialVersionUID = -53241657142481068L;
 
     private Integer attributeId;
 

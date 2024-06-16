@@ -1,18 +1,16 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.util.Date;
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
- * 版本记录(Version)表实体类
+ * 版本记录(Version)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-16 16:37:05
  */
-@SuppressWarnings("serial")
-public class Version extends Model<Version> {
+public class Version implements Serializable {
+    private static final long serialVersionUID = -51378202490038658L;
 
     private Integer versionId;
 
@@ -45,14 +43,5 @@ public class Version extends Model<Version> {
         this.updateTime = updateTime;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.versionId;
-    }
 }
 

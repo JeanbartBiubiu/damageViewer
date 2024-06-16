@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * (FormulaDefault)表实体类
+ * (FormulaDefault)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class FormulaDefault extends Model<FormulaDefault> {
+public class FormulaDefault implements Serializable {
+    private static final long serialVersionUID = 166163933450108864L;
 
     private Integer formulaId;
 
@@ -40,18 +38,9 @@ public class FormulaDefault extends Model<FormulaDefault> {
         return defaultV;
     }
 
-    public void setDefault(String defaultV) {
+    public void setDefaultV(String defaultV) {
         this.defaultV = defaultV;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.formulaId;
-    }
 }
 

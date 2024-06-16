@@ -9,23 +9,101 @@
         <result property="gameImg" column="game_img" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 批量插入 -->
+    <!--查询单个-->
+    <select id="queryById" resultMap="GameInfoMap">
+        select
+game_id,game_code,game_name,game_img
+        from ${whichGame}.game_info
+        where game_id = #{gameId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="GameInfoMap">
+        select
+game_idgame_codegame_namegame_img
+        from ${whichGame}.game_info
+        <where>
+            <if test="gameId != null">
+                and game_id = #{gameId}
+            </if>
+            <if test="gameCode != null and gameCode != ''">
+                and game_code = #{gameCode}
+            </if>
+            <if test="gameName != null and gameName != ''">
+                and game_name = #{gameName}
+            </if>
+            <if test="gameImg != null and gameImg != ''">
+                and game_img = #{gameImg}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ${whichGame}.game_info
+        <where>
+            <if test="gameId != null">
+                and game_id = #{gameId}
+            </if>
+            <if test="gameCode != null and gameCode != ''">
+                and game_code = #{gameCode}
+            </if>
+            <if test="gameName != null and gameName != ''">
+                and game_name = #{gameName}
+            </if>
+            <if test="gameImg != null and gameImg != ''">
+                and game_img = #{gameImg}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="gameId" useGeneratedKeys="true">
+        insert into default_table.game_info(game_code,game_name,game_img)
+        values (#{gameCode},#{gameName},#{gameImg})
+    </insert>
+
     <insert id="insertBatch" keyProperty="gameId" useGeneratedKeys="true">
-        insert into default_table.game_info(game_codegame_namegame_img)
+        insert into ${whichGame}.game_info(game_codegame_namegame_img)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.gameCode}#{entity.gameName}#{entity.gameImg})
         </foreach>
     </insert>
-    <!-- 批量插入或按主键更新 -->
+
     <insert id="insertOrUpdateBatch" keyProperty="gameId" useGeneratedKeys="true">
-        insert into default_table.game_info(game_codegame_namegame_img)
+        insert into ${whichGame}.game_info(game_codegame_namegame_img)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.gameCode}#{entity.gameName}#{entity.gameImg})
         </foreach>
         on duplicate key update
-game_code = values(game_code) game_name = values(game_name) game_img = values(game_img)     </insert>
+game_code = values(game_code)game_name = values(game_name)game_img = values(game_img)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ${whichGame}.game_info
+        <set>
+            <if test="gameCode != null and gameCode != ''">
+                game_code = #{gameCode},
+            </if>
+            <if test="gameName != null and gameName != ''">
+                game_name = #{gameName},
+            </if>
+            <if test="gameImg != null and gameImg != ''">
+                game_img = #{gameImg},
+            </if>
+        </set>
+        where game_id = #{gameId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ${whichGame}.game_info where game_id = #{gameId}
+    </delete>
 
 </mapper>
 

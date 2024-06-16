@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * 单位-属性-等级对应数据数值(AttributeValue)表实体类
+ * 单位-属性-等级对应数据数值(AttributeValue)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class AttributeValue extends Model<AttributeValue> {
+public class AttributeValue implements Serializable {
+    private static final long serialVersionUID = -15178661821179058L;
 
     private Integer indivId;
 

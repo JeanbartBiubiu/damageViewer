@@ -1,20 +1,20 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * 属性表(Attribute)表实体类
+ * 属性表(Attribute)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:12
  */
-@SuppressWarnings("serial")
-public class Attribute extends Model<Attribute> {
+public class Attribute implements Serializable {
+    private static final long serialVersionUID = -67922519514539974L;
 
     private Integer attributeId;
-//属性图片
+/**
+     * 属性图片
+     */
     private String attributeImg;
 
 
@@ -34,14 +34,5 @@ public class Attribute extends Model<Attribute> {
         this.attributeImg = attributeImg;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.attributeId;
-    }
 }
 

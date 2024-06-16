@@ -1,17 +1,17 @@
 package xyz.game.entity;
 
+import org.apache.ibatis.annotations.Param;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * (GameInfo)表实体类
+ * (GameInfo)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class GameInfo extends Model<GameInfo> {
+public class GameInfo implements Serializable {
+    private static final long serialVersionUID = 506879159668291936L;
 
     private Integer gameId;
 
@@ -54,14 +54,5 @@ public class GameInfo extends Model<GameInfo> {
         this.gameImg = gameImg;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.gameId;
-    }
 }
 

@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * (Language)表实体类
+ * (Language)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class Language extends Model<Language> {
+public class Language implements Serializable {
+    private static final long serialVersionUID = -77751876271926756L;
 
     private Integer languageId;
 
@@ -34,14 +32,5 @@ public class Language extends Model<Language> {
         this.languageName = languageName;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.languageId;
-    }
 }
 

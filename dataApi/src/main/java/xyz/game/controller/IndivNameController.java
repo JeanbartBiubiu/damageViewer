@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.IndivName;
 import xyz.game.service.IndivNameService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * (IndivName)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
 @RestController
 @RequestMapping("indivName")
-public class IndivNameController extends ApiController {
+public class IndivNameController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class IndivNameController extends ApiController {
     private IndivNameService indivNameService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param indivName 查询实体
-     * @return 所有数据
+     * @param indivName 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<IndivName> page, IndivName indivName) {
-        return success(this.indivNameService.page(page, new QueryWrapper<>(indivName)));
+    public ResponseEntity<Page<IndivName>> queryByPage(IndivName indivName, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.indivNameService.queryByPage(indivName, pageRequest));
     }
 
     /**
@@ -48,41 +43,42 @@ public class IndivNameController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.indivNameService.getById(id));
+    public ResponseEntity<IndivName> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(this.indivNameService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param indivName 实体对象
+     * @param indivName 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody IndivName indivName) {
-        return success(this.indivNameService.save(indivName));
+    public ResponseEntity<IndivName> add(IndivName indivName) {
+        return ResponseEntity.ok(this.indivNameService.insert(indivName));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param indivName 实体对象
-     * @return 修改结果
+     * @param indivName 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody IndivName indivName) {
-        return success(this.indivNameService.updateById(indivName));
+    public ResponseEntity<IndivName> edit(IndivName indivName) {
+        return ResponseEntity.ok(this.indivNameService.update(indivName));
     }
 
     /**
      * 删除数据
      *
-     * @param idList 主键结合
-     * @return 删除结果
+     * @param id 主键
+     * @return 删除是否成功
      */
     @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.indivNameService.removeByIds(idList));
+    public ResponseEntity<Boolean> deleteById(Integer id) {
+        return ResponseEntity.ok(this.indivNameService.deleteById(id));
     }
+
 }
 

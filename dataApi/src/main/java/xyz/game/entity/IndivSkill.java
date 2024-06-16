@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * 人物-技能关联表(IndivSkill)表实体类
+ * 人物-技能关联表(IndivSkill)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class IndivSkill extends Model<IndivSkill> {
+public class IndivSkill implements Serializable {
+    private static final long serialVersionUID = -44018894842947999L;
 
     private Integer indivId;
 

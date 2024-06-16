@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * (EquipmentName)表实体类
+ * (EquipmentName)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class EquipmentName extends Model<EquipmentName> {
+public class EquipmentName implements Serializable {
+    private static final long serialVersionUID = -14035587488288371L;
 
     private Integer equipId;
 
@@ -44,14 +42,5 @@ public class EquipmentName extends Model<EquipmentName> {
         this.equipName = equipName;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.equipId;
-    }
 }
 

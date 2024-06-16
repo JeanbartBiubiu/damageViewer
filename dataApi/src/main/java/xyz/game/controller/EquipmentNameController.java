@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.EquipmentName;
 import xyz.game.service.EquipmentNameService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * (EquipmentName)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
 @RestController
 @RequestMapping("equipmentName")
-public class EquipmentNameController extends ApiController {
+public class EquipmentNameController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class EquipmentNameController extends ApiController {
     private EquipmentNameService equipmentNameService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param equipmentName 查询实体
-     * @return 所有数据
+     * @param equipmentName 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<EquipmentName> page, EquipmentName equipmentName) {
-        return success(this.equipmentNameService.page(page, new QueryWrapper<>(equipmentName)));
+    public ResponseEntity<Page<EquipmentName>> queryByPage(EquipmentName equipmentName, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.equipmentNameService.queryByPage(equipmentName, pageRequest));
     }
 
     /**
@@ -48,41 +43,42 @@ public class EquipmentNameController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.equipmentNameService.getById(id));
+    public ResponseEntity<EquipmentName> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(this.equipmentNameService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param equipmentName 实体对象
+     * @param equipmentName 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody EquipmentName equipmentName) {
-        return success(this.equipmentNameService.save(equipmentName));
+    public ResponseEntity<EquipmentName> add(EquipmentName equipmentName) {
+        return ResponseEntity.ok(this.equipmentNameService.insert(equipmentName));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param equipmentName 实体对象
-     * @return 修改结果
+     * @param equipmentName 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody EquipmentName equipmentName) {
-        return success(this.equipmentNameService.updateById(equipmentName));
+    public ResponseEntity<EquipmentName> edit(EquipmentName equipmentName) {
+        return ResponseEntity.ok(this.equipmentNameService.update(equipmentName));
     }
 
     /**
      * 删除数据
      *
-     * @param idList 主键结合
-     * @return 删除结果
+     * @param id 主键
+     * @return 删除是否成功
      */
     @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.equipmentNameService.removeByIds(idList));
+    public ResponseEntity<Boolean> deleteById(Integer id) {
+        return ResponseEntity.ok(this.equipmentNameService.deleteById(id));
     }
+
 }
 

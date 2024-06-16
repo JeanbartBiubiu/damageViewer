@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.SkillDef;
 import xyz.game.service.SkillDefService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * 技能定义表(SkillDef)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
 @RestController
 @RequestMapping("skillDef")
-public class SkillDefController extends ApiController {
+public class SkillDefController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class SkillDefController extends ApiController {
     private SkillDefService skillDefService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param skillDef 查询实体
-     * @return 所有数据
+     * @param skillDef 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<SkillDef> page, SkillDef skillDef) {
-        return success(this.skillDefService.page(page, new QueryWrapper<>(skillDef)));
+    public ResponseEntity<Page<SkillDef>> queryByPage(SkillDef skillDef, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.skillDefService.queryByPage(skillDef, pageRequest));
     }
 
     /**
@@ -48,41 +43,42 @@ public class SkillDefController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.skillDefService.getById(id));
+    public ResponseEntity<SkillDef> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(this.skillDefService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param skillDef 实体对象
+     * @param skillDef 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody SkillDef skillDef) {
-        return success(this.skillDefService.save(skillDef));
+    public ResponseEntity<SkillDef> add(SkillDef skillDef) {
+        return ResponseEntity.ok(this.skillDefService.insert(skillDef));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param skillDef 实体对象
-     * @return 修改结果
+     * @param skillDef 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody SkillDef skillDef) {
-        return success(this.skillDefService.updateById(skillDef));
+    public ResponseEntity<SkillDef> edit(SkillDef skillDef) {
+        return ResponseEntity.ok(this.skillDefService.update(skillDef));
     }
 
     /**
      * 删除数据
      *
-     * @param idList 主键结合
-     * @return 删除结果
+     * @param id 主键
+     * @return 删除是否成功
      */
     @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.skillDefService.removeByIds(idList));
+    public ResponseEntity<Boolean> deleteById(Integer id) {
+        return ResponseEntity.ok(this.skillDefService.deleteById(id));
     }
+
 }
 

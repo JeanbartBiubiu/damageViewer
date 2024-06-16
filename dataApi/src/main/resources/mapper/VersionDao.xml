@@ -8,23 +8,92 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!-- 批量插入 -->
+    <!--查询单个-->
+    <select id="queryById" resultMap="VersionMap">
+        select
+version_idversion_codeupdate_time
+        from ${whichGame}.version
+        where version_id = #{versionId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="VersionMap">
+        select
+version_idversion_codeupdate_time
+        from ${whichGame}.version
+        <where>
+            <if test="versionId != null">
+                and version_id = #{versionId}
+            </if>
+            <if test="versionCode != null and versionCode != ''">
+                and version_code = #{versionCode}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ${whichGame}.version
+        <where>
+            <if test="versionId != null">
+                and version_id = #{versionId}
+            </if>
+            <if test="versionCode != null and versionCode != ''">
+                and version_code = #{versionCode}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="versionId" useGeneratedKeys="true">
+        insert into ${whichGame}.version(version_codeupdate_time)
+        values (#{versionCode}#{updateTime})
+    </insert>
+
     <insert id="insertBatch" keyProperty="versionId" useGeneratedKeys="true">
-        insert into default_table.version(version_codeupdate_time)
+        insert into ${whichGame}.version(version_codeupdate_time)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.versionCode}#{entity.updateTime})
         </foreach>
     </insert>
-    <!-- 批量插入或按主键更新 -->
+
     <insert id="insertOrUpdateBatch" keyProperty="versionId" useGeneratedKeys="true">
-        insert into default_table.version(version_codeupdate_time)
+        insert into ${whichGame}.version(version_codeupdate_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.versionCode}#{entity.updateTime})
         </foreach>
         on duplicate key update
-version_code = values(version_code) update_time = values(update_time)     </insert>
+version_code = values(version_code)update_time = values(update_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ${whichGame}.version
+        <set>
+            <if test="versionCode != null and versionCode != ''">
+                version_code = #{versionCode},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where version_id = #{versionId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ${whichGame}.version where version_id = #{versionId}
+    </delete>
 
 </mapper>
 

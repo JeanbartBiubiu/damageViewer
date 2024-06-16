@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.Individual;
 import xyz.game.service.IndividualService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * (Individual)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
 @RestController
 @RequestMapping("individual")
-public class IndividualController extends ApiController {
+public class IndividualController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class IndividualController extends ApiController {
     private IndividualService individualService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param individual 查询实体
-     * @return 所有数据
+     * @param individual 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<Individual> page, Individual individual) {
-        return success(this.individualService.page(page, new QueryWrapper<>(individual)));
+    public ResponseEntity<Page<Individual>> queryByPage(Individual individual, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.individualService.queryByPage(individual, pageRequest));
     }
 
     /**
@@ -48,41 +43,42 @@ public class IndividualController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.individualService.getById(id));
+    public ResponseEntity<Individual> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(this.individualService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param individual 实体对象
+     * @param individual 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody Individual individual) {
-        return success(this.individualService.save(individual));
+    public ResponseEntity<Individual> add(Individual individual) {
+        return ResponseEntity.ok(this.individualService.insert(individual));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param individual 实体对象
-     * @return 修改结果
+     * @param individual 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody Individual individual) {
-        return success(this.individualService.updateById(individual));
+    public ResponseEntity<Individual> edit(Individual individual) {
+        return ResponseEntity.ok(this.individualService.update(individual));
     }
 
     /**
      * 删除数据
      *
-     * @param idList 主键结合
-     * @return 删除结果
+     * @param id 主键
+     * @return 删除是否成功
      */
     @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.individualService.removeByIds(idList));
+    public ResponseEntity<Boolean> deleteById(Integer id) {
+        return ResponseEntity.ok(this.individualService.deleteById(id));
     }
+
 }
 

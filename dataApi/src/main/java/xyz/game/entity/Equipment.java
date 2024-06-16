@@ -1,24 +1,24 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * 装备表(buff等状态效果也定义为装备)(Equipment)表实体类
+ * 装备表(buff等状态效果也定义为装备)(Equipment)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class Equipment extends Model<Equipment> {
+public class Equipment implements Serializable {
+    private static final long serialVersionUID = 426789836458751444L;
 
     private Integer equipId;
 
     private String equipImg;
 
     private Integer consumption;
-//增加的属性数值表达式
+/**
+     * 增加的属性数值表达式
+     */
     private String attributeExpression;
 
 
@@ -54,14 +54,5 @@ public class Equipment extends Model<Equipment> {
         this.attributeExpression = attributeExpression;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.equipId;
-    }
 }
 

@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * (ComputingLifeCycle)表实体类
+ * (ComputingLifeCycle)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class ComputingLifeCycle extends Model<ComputingLifeCycle> {
+public class ComputingLifeCycle implements Serializable {
+    private static final long serialVersionUID = 750197259877755570L;
 
     private Integer cycleId;
 
@@ -64,14 +62,5 @@ public class ComputingLifeCycle extends Model<ComputingLifeCycle> {
         this.name = name;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.cycleId;
-    }
 }
 

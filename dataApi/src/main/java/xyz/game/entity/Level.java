@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * 等级定义表(Level)表实体类
+ * 等级定义表(Level)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class Level extends Model<Level> {
+public class Level implements Serializable {
+    private static final long serialVersionUID = -18807078983908994L;
 
     private Integer levelId;
 
@@ -44,14 +42,5 @@ public class Level extends Model<Level> {
         this.levelName = levelName;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.levelId;
-    }
 }
 

@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.GameInfo;
 import xyz.game.service.GameInfoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * (GameInfo)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
 @RestController
 @RequestMapping("gameInfo")
-public class GameInfoController extends ApiController {
+public class GameInfoController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class GameInfoController extends ApiController {
     private GameInfoService gameInfoService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param gameInfo 查询实体
-     * @return 所有数据
+     * @param gameInfo 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<GameInfo> page, GameInfo gameInfo) {
-        return success(this.gameInfoService.page(page, new QueryWrapper<>(gameInfo)));
+    public ResponseEntity<Page<GameInfo>> queryByPage(GameInfo gameInfo, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.gameInfoService.queryByPage(gameInfo, pageRequest));
     }
 
     /**
@@ -48,41 +43,32 @@ public class GameInfoController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.gameInfoService.getById(id));
+    public ResponseEntity<GameInfo> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(this.gameInfoService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param gameInfo 实体对象
+     * @param gameInfo 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody GameInfo gameInfo) {
-        return success(this.gameInfoService.save(gameInfo));
+    public ResponseEntity<GameInfo> add(@RequestBody GameInfo gameInfo) {
+        System.out.println(gameInfo);
+        return ResponseEntity.ok(this.gameInfoService.insert(gameInfo));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param gameInfo 实体对象
-     * @return 修改结果
+     * @param gameInfo 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody GameInfo gameInfo) {
-        return success(this.gameInfoService.updateById(gameInfo));
+    public ResponseEntity<GameInfo> edit(GameInfo gameInfo) {
+        return ResponseEntity.ok(this.gameInfoService.update(gameInfo));
     }
 
-    /**
-     * 删除数据
-     *
-     * @param idList 主键结合
-     * @return 删除结果
-     */
-    @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.gameInfoService.removeByIds(idList));
-    }
 }
 

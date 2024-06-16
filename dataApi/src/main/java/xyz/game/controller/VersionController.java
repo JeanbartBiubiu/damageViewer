@@ -1,28 +1,23 @@
 package xyz.game.controller;
 
-
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import xyz.game.generaator.ApiController;
-import xyz.game.generaator.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.game.entity.Version;
 import xyz.game.service.VersionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * 版本记录(Version)表控制层
  *
  * @author makejava
- * @since 2024-06-15 16:49:21
+ * @since 2024-06-16 16:37:05
  */
 @RestController
 @RequestMapping("version")
-public class VersionController extends ApiController {
+public class VersionController {
     /**
      * 服务对象
      */
@@ -30,15 +25,15 @@ public class VersionController extends ApiController {
     private VersionService versionService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询
      *
-     * @param page 分页对象
-     * @param version 查询实体
-     * @return 所有数据
+     * @param version 筛选条件
+     * @param pageRequest      分页对象
+     * @return 查询结果
      */
     @GetMapping
-    public R selectAll(Page<Version> page, Version version) {
-        return success(this.versionService.page(page, new QueryWrapper<>(version)));
+    public ResponseEntity<Page<Version>> queryByPage(Version version, PageRequest pageRequest) {
+        return ResponseEntity.ok(this.versionService.queryByPage(version, pageRequest));
     }
 
     /**
@@ -48,41 +43,42 @@ public class VersionController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.versionService.getById(id));
+    public ResponseEntity<Version> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(this.versionService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param version 实体对象
+     * @param version 实体
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody Version version) {
-        return success(this.versionService.save(version));
+    public ResponseEntity<Version> add(Version version) {
+        return ResponseEntity.ok(this.versionService.insert(version));
     }
 
     /**
-     * 修改数据
+     * 编辑数据
      *
-     * @param version 实体对象
-     * @return 修改结果
+     * @param version 实体
+     * @return 编辑结果
      */
     @PutMapping
-    public R update(@RequestBody Version version) {
-        return success(this.versionService.updateById(version));
+    public ResponseEntity<Version> edit(Version version) {
+        return ResponseEntity.ok(this.versionService.update(version));
     }
 
     /**
      * 删除数据
      *
-     * @param idList 主键结合
-     * @return 删除结果
+     * @param id 主键
+     * @return 删除是否成功
      */
     @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.versionService.removeByIds(idList));
+    public ResponseEntity<Boolean> deleteById(Integer id) {
+        return ResponseEntity.ok(this.versionService.deleteById(id));
     }
+
 }
 

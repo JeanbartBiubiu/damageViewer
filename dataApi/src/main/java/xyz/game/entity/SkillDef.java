@@ -1,17 +1,15 @@
 package xyz.game.entity;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 /**
- * 技能定义表(SkillDef)表实体类
+ * 技能定义表(SkillDef)实体类
  *
  * @author makejava
- * @since 2024-06-15 16:49:20
+ * @since 2024-06-15 19:17:13
  */
-@SuppressWarnings("serial")
-public class SkillDef extends Model<SkillDef> {
+public class SkillDef implements Serializable {
+    private static final long serialVersionUID = -68868087103184520L;
 
     private Integer skillId;
 
@@ -54,14 +52,5 @@ public class SkillDef extends Model<SkillDef> {
         this.skillType = skillType;
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.skillId;
-    }
 }
 
