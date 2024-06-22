@@ -30,7 +30,7 @@ public interface GameInfoDao {
      * @param pageable         分页对象
      * @return 对象列表
      */
-    List<GameInfo> queryAllByLimit(GameInfo gameInfo, @Param("pageable") Pageable pageable);
+    List<GameInfo> query(@Param("param") GameInfo gameInfo, @Param("id2") int id2);
 
     /**
      * 统计总行数

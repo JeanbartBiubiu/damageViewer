@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (GameInfo)表控制层
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2024-06-15 19:17:13
  */
 @RestController
-@RequestMapping("gameInfo")
+@RequestMapping("/{gamePath}/gameInfo")
 public class GameInfoController {
     /**
      * 服务对象
@@ -32,8 +33,11 @@ public class GameInfoController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<GameInfo>> queryByPage(GameInfo gameInfo, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.gameInfoService.queryByPage(gameInfo, pageRequest));
+    public ResponseEntity<List<GameInfo>> queryByPage(GameInfo gameInfo,
+                                                      @PathVariable("gamePath") String gameCode) {
+        System.out.println(gameInfo);
+        System.out.println(gameCode);
+        return ResponseEntity.ok(this.gameInfoService.query(gameInfo));
     }
 
     /**

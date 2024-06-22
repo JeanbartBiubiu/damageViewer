@@ -4,6 +4,8 @@ import xyz.game.entity.GameInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (GameInfo)表服务接口
  *
@@ -27,7 +29,7 @@ public interface GameInfoService {
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<GameInfo> queryByPage(GameInfo gameInfo, PageRequest pageRequest);
+    List<GameInfo> query(GameInfo gameInfo);
 
     /**
      * 新增数据

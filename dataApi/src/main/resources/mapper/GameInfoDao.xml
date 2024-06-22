@@ -18,25 +18,24 @@ game_id,game_code,game_name,game_img
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="GameInfoMap">
+    <select id="query" resultMap="GameInfoMap">
         select
-game_idgame_codegame_namegame_img
-        from ${whichGame}.game_info
+            game_id,game_code,game_name,game_img
+        from default_table.game_info
         <where>
-            <if test="gameId != null">
-                and game_id = #{gameId}
+            <if test="param.gameId != null">
+                and game_id = #{param.gameId}
             </if>
-            <if test="gameCode != null and gameCode != ''">
-                and game_code = #{gameCode}
+            <if test="param.gameCode != null and param.gameCode != ''">
+                and game_code = #{param.gameCode}
             </if>
-            <if test="gameName != null and gameName != ''">
-                and game_name = #{gameName}
+            <if test="param.gameName != null and param.gameName != ''">
+                and game_name = #{param.gameName}
             </if>
-            <if test="gameImg != null and gameImg != ''">
-                and game_img = #{gameImg}
+            <if test="param.gameImg != null and param.gameImg != ''">
+                and game_img = #{param.gameImg}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

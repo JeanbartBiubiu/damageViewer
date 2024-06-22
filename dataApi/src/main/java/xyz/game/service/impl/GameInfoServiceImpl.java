@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (GameInfo)表服务实现类
@@ -49,9 +50,8 @@ public class GameInfoServiceImpl implements GameInfoService {
      * @return 查询结果
      */
     @Override
-    public Page<GameInfo> queryByPage(GameInfo gameInfo, PageRequest pageRequest) {
-        long total = this.gameInfoDao.count(gameInfo);
-        return new PageImpl<>(this.gameInfoDao.queryAllByLimit(gameInfo, pageRequest), pageRequest, total);
+    public List<GameInfo> query(GameInfo gameInfo) {
+        return this.gameInfoDao.query(gameInfo,666);
     }
 
     /**
