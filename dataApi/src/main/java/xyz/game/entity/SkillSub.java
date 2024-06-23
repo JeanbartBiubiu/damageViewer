@@ -6,10 +6,10 @@ import java.io.Serializable;
  * (SkillSub)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class SkillSub implements Serializable {
-    private static final long serialVersionUID = 782927047103622184L;
+    private static final long serialVersionUID = -77742090076131519L;
 
     private Integer skillId;
 

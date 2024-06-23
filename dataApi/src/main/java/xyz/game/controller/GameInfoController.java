@@ -2,22 +2,21 @@ package xyz.game.controller;
 
 import xyz.game.entity.GameInfo;
 import xyz.game.service.GameInfoService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
 import java.util.List;
 
 /**
  * (GameInfo)表控制层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @RestController
-@RequestMapping("/{gamePath}/gameInfo")
+@RequestMapping("gameInfo")
 public class GameInfoController {
     /**
      * 服务对象
@@ -29,14 +28,10 @@ public class GameInfoController {
      * 分页查询
      *
      * @param gameInfo 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<GameInfo>> queryByPage(GameInfo gameInfo,
-                                                      @PathVariable("gamePath") String gameCode) {
-        System.out.println(gameInfo);
-        System.out.println(gameCode);
+    public ResponseEntity<List<GameInfo>> query(GameInfo gameInfo) {
         return ResponseEntity.ok(this.gameInfoService.query(gameInfo));
     }
 
@@ -58,8 +53,7 @@ public class GameInfoController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<GameInfo> add(@RequestBody GameInfo gameInfo) {
-        System.out.println(gameInfo);
+    public ResponseEntity<GameInfo> add(GameInfo gameInfo) {
         return ResponseEntity.ok(this.gameInfoService.insert(gameInfo));
     }
 
@@ -72,6 +66,17 @@ public class GameInfoController {
     @PutMapping
     public ResponseEntity<GameInfo> edit(GameInfo gameInfo) {
         return ResponseEntity.ok(this.gameInfoService.update(gameInfo));
+    }
+
+    /**
+     * 删除数据
+     *
+     * @param id 主键
+     * @return 删除是否成功
+     */
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteById(Integer id) {
+        return ResponseEntity.ok(this.gameInfoService.deleteById(id));
     }
 
 }

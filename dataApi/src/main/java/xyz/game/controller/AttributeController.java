@@ -2,18 +2,18 @@ package xyz.game.controller;
 
 import xyz.game.entity.Attribute;
 import xyz.game.service.AttributeService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 /**
  * 属性表(Attribute)表控制层
  *
  * @author makejava
- * @since 2024-06-15 19:17:12
+ * @since 2024-06-23 21:23:34
  */
 @RestController
 @RequestMapping("attribute")
@@ -28,12 +28,11 @@ public class AttributeController {
      * 分页查询
      *
      * @param attribute 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<Attribute>> queryByPage(Attribute attribute, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.attributeService.queryByPage(attribute, pageRequest));
+    public ResponseEntity<List<Attribute>> query(Attribute attribute) {
+        return ResponseEntity.ok(this.attributeService.query(attribute));
     }
 
     /**

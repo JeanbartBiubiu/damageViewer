@@ -4,17 +4,16 @@ import xyz.game.entity.Attribute;
 import xyz.game.dao.AttributeDao;
 import xyz.game.service.AttributeService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 属性表(Attribute)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:12
+ * @since 2024-06-23 21:23:34
  */
 @Service("attributeService")
 public class AttributeServiceImpl implements AttributeService {
@@ -36,13 +35,11 @@ public class AttributeServiceImpl implements AttributeService {
      * 分页查询
      *
      * @param attribute 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<Attribute> queryByPage(Attribute attribute, PageRequest pageRequest) {
-        long total = this.attributeDao.count(attribute);
-        return new PageImpl<>(this.attributeDao.queryAllByLimit(attribute, pageRequest), pageRequest, total);
+    public List<Attribute> query(Attribute attribute) {
+        return this.attributeDao.query(attribute);
     }
 
     /**

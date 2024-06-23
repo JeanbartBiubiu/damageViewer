@@ -4,17 +4,16 @@ import xyz.game.entity.ComputingLifeCycle;
 import xyz.game.dao.ComputingLifeCycleDao;
 import xyz.game.service.ComputingLifeCycleService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * (ComputingLifeCycle)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("computingLifeCycleService")
 public class ComputingLifeCycleServiceImpl implements ComputingLifeCycleService {
@@ -36,13 +35,11 @@ public class ComputingLifeCycleServiceImpl implements ComputingLifeCycleService 
      * 分页查询
      *
      * @param computingLifeCycle 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<ComputingLifeCycle> queryByPage(ComputingLifeCycle computingLifeCycle, PageRequest pageRequest) {
-        long total = this.computingLifeCycleDao.count(computingLifeCycle);
-        return new PageImpl<>(this.computingLifeCycleDao.queryAllByLimit(computingLifeCycle, pageRequest), pageRequest, total);
+    public List<ComputingLifeCycle> query(ComputingLifeCycle computingLifeCycle) {
+        return this.computingLifeCycleDao.query(computingLifeCycle);
     }
 
     /**

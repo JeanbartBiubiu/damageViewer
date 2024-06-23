@@ -1,18 +1,15 @@
 package xyz.game.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import xyz.game.entity.ComputingLifeCycle;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * (ComputingLifeCycle)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
-@Mapper
 public interface ComputingLifeCycleDao {
 
     /**
@@ -27,10 +24,9 @@ public interface ComputingLifeCycleDao {
      * 查询指定行数据
      *
      * @param computingLifeCycle 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<ComputingLifeCycle> queryAllByLimit(ComputingLifeCycle computingLifeCycle, @Param("pageable") Pageable pageable);
+    List<ComputingLifeCycle> query(ComputingLifeCycle computingLifeCycle);
 
     /**
      * 统计总行数

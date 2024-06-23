@@ -16,7 +16,7 @@ attribute_idattribute_img
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="AttributeMap">
+    <select id="query" resultMap="AttributeMap">
         select
 attribute_idattribute_img
         from ${whichGame}.attribute
@@ -28,7 +28,6 @@ attribute_idattribute_img
                 and attribute_img = #{attributeImg}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

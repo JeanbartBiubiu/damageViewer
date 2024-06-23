@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.Version;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * 版本记录(Version)表服务接口
  *
  * @author makejava
- * @since 2024-06-16 16:37:05
+ * @since 2024-06-23 21:23:34
  */
 public interface VersionService {
 
@@ -24,10 +24,9 @@ public interface VersionService {
      * 分页查询
      *
      * @param version 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<Version> queryByPage(Version version, PageRequest pageRequest);
+    List<Version> query(Version version);
 
     /**
      * 新增数据

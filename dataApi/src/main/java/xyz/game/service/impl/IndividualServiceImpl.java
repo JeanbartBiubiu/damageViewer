@@ -4,17 +4,16 @@ import xyz.game.entity.Individual;
 import xyz.game.dao.IndividualDao;
 import xyz.game.service.IndividualService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * (Individual)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("individualService")
 public class IndividualServiceImpl implements IndividualService {
@@ -36,13 +35,11 @@ public class IndividualServiceImpl implements IndividualService {
      * 分页查询
      *
      * @param individual 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<Individual> queryByPage(Individual individual, PageRequest pageRequest) {
-        long total = this.individualDao.count(individual);
-        return new PageImpl<>(this.individualDao.queryAllByLimit(individual, pageRequest), pageRequest, total);
+    public List<Individual> query(Individual individual) {
+        return this.individualDao.query(individual);
     }
 
     /**

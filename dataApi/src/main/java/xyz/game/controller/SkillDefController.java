@@ -2,18 +2,18 @@ package xyz.game.controller;
 
 import xyz.game.entity.SkillDef;
 import xyz.game.service.SkillDefService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 /**
  * 技能定义表(SkillDef)表控制层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @RestController
 @RequestMapping("skillDef")
@@ -28,12 +28,11 @@ public class SkillDefController {
      * 分页查询
      *
      * @param skillDef 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<SkillDef>> queryByPage(SkillDef skillDef, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.skillDefService.queryByPage(skillDef, pageRequest));
+    public ResponseEntity<List<SkillDef>> query(SkillDef skillDef) {
+        return ResponseEntity.ok(this.skillDefService.query(skillDef));
     }
 
     /**

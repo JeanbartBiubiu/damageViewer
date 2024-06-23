@@ -4,17 +4,16 @@ import xyz.game.entity.IndivName;
 import xyz.game.dao.IndivNameDao;
 import xyz.game.service.IndivNameService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * (IndivName)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("indivNameService")
 public class IndivNameServiceImpl implements IndivNameService {
@@ -36,13 +35,11 @@ public class IndivNameServiceImpl implements IndivNameService {
      * 分页查询
      *
      * @param indivName 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<IndivName> queryByPage(IndivName indivName, PageRequest pageRequest) {
-        long total = this.indivNameDao.count(indivName);
-        return new PageImpl<>(this.indivNameDao.queryAllByLimit(indivName, pageRequest), pageRequest, total);
+    public List<IndivName> query(IndivName indivName) {
+        return this.indivNameDao.query(indivName);
     }
 
     /**

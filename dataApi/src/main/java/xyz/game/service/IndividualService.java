@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.Individual;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (Individual)表服务接口
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public interface IndividualService {
 
@@ -24,10 +24,9 @@ public interface IndividualService {
      * 分页查询
      *
      * @param individual 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<Individual> queryByPage(Individual individual, PageRequest pageRequest);
+    List<Individual> query(Individual individual);
 
     /**
      * 新增数据

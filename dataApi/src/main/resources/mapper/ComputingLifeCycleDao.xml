@@ -19,7 +19,7 @@ cycle_idordertypecodename
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ComputingLifeCycleMap">
+    <select id="query" resultMap="ComputingLifeCycleMap">
         select
 cycle_idordertypecodename
         from ${whichGame}.computing_life_cycle
@@ -40,7 +40,6 @@ cycle_idordertypecodename
                 and name = #{name}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

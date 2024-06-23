@@ -17,7 +17,7 @@ indiv_idlanguage_idindiv_name
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="IndivNameMap">
+    <select id="query" resultMap="IndivNameMap">
         select
 indiv_idlanguage_idindiv_name
         from ${whichGame}.indiv_name
@@ -32,7 +32,6 @@ indiv_idlanguage_idindiv_name
                 and indiv_name = #{indivName}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

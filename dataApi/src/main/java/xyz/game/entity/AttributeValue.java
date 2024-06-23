@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 单位-属性-等级对应数据数值(AttributeValue)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class AttributeValue implements Serializable {
-    private static final long serialVersionUID = -15178661821179058L;
+    private static final long serialVersionUID = 324944027450552875L;
 
     private Integer indivId;
 

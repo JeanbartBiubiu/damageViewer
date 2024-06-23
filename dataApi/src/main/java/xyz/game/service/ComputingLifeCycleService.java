@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.ComputingLifeCycle;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (ComputingLifeCycle)表服务接口
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public interface ComputingLifeCycleService {
 
@@ -24,10 +24,9 @@ public interface ComputingLifeCycleService {
      * 分页查询
      *
      * @param computingLifeCycle 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<ComputingLifeCycle> queryByPage(ComputingLifeCycle computingLifeCycle, PageRequest pageRequest);
+    List<ComputingLifeCycle> query(ComputingLifeCycle computingLifeCycle);
 
     /**
      * 新增数据

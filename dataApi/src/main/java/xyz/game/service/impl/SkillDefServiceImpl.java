@@ -4,17 +4,16 @@ import xyz.game.entity.SkillDef;
 import xyz.game.dao.SkillDefDao;
 import xyz.game.service.SkillDefService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 技能定义表(SkillDef)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("skillDefService")
 public class SkillDefServiceImpl implements SkillDefService {
@@ -36,13 +35,11 @@ public class SkillDefServiceImpl implements SkillDefService {
      * 分页查询
      *
      * @param skillDef 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<SkillDef> queryByPage(SkillDef skillDef, PageRequest pageRequest) {
-        long total = this.skillDefDao.count(skillDef);
-        return new PageImpl<>(this.skillDefDao.queryAllByLimit(skillDef, pageRequest), pageRequest, total);
+    public List<SkillDef> query(SkillDef skillDef) {
+        return this.skillDefDao.query(skillDef);
     }
 
     /**

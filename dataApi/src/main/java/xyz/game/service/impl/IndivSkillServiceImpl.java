@@ -4,17 +4,16 @@ import xyz.game.entity.IndivSkill;
 import xyz.game.dao.IndivSkillDao;
 import xyz.game.service.IndivSkillService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 人物-技能关联表(IndivSkill)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("indivSkillService")
 public class IndivSkillServiceImpl implements IndivSkillService {
@@ -28,7 +27,7 @@ public class IndivSkillServiceImpl implements IndivSkillService {
      * @return 实例对象
      */
     @Override
-    public IndivSkill queryById(int id ) {
+    public IndivSkill queryById( ) {
         return this.indivSkillDao.queryById();
     }
 
@@ -36,13 +35,11 @@ public class IndivSkillServiceImpl implements IndivSkillService {
      * 分页查询
      *
      * @param indivSkill 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<IndivSkill> queryByPage(IndivSkill indivSkill, PageRequest pageRequest) {
-        long total = this.indivSkillDao.count(indivSkill);
-        return new PageImpl<>(this.indivSkillDao.queryAllByLimit(indivSkill, pageRequest), pageRequest, total);
+    public List<IndivSkill> query(IndivSkill indivSkill) {
+        return this.indivSkillDao.query(indivSkill);
     }
 
     /**
@@ -66,7 +63,7 @@ public class IndivSkillServiceImpl implements IndivSkillService {
     @Override
     public IndivSkill update(IndivSkill indivSkill) {
         this.indivSkillDao.update(indivSkill);
-        return this.queryById(indivSkill.getIndivId());
+        return this.queryById();
     }
 
     /**
@@ -76,7 +73,7 @@ public class IndivSkillServiceImpl implements IndivSkillService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(int id ) {
+    public boolean deleteById( ) {
         return this.indivSkillDao.deleteById() > 0;
     }
 }

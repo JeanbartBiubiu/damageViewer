@@ -17,7 +17,7 @@ formula_idformula_typedefault_v
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="FormulaDefaultMap">
+    <select id="query" resultMap="FormulaDefaultMap">
         select
 formula_idformula_typedefault_v
         from ${whichGame}.formula_default
@@ -32,7 +32,6 @@ formula_idformula_typedefault_v
                 and default_v = #{defaultV}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

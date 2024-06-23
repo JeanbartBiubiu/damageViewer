@@ -7,10 +7,10 @@ import java.io.Serializable;
  * 版本记录(Version)实体类
  *
  * @author makejava
- * @since 2024-06-16 16:37:05
+ * @since 2024-06-23 21:23:34
  */
 public class Version implements Serializable {
-    private static final long serialVersionUID = -51378202490038658L;
+    private static final long serialVersionUID = 414288817223621285L;
 
     private Integer versionId;
 

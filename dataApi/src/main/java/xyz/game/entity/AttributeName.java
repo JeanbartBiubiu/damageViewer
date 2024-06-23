@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 属性名称表(AttributeName)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class AttributeName implements Serializable {
-    private static final long serialVersionUID = -40001837508807990L;
+    private static final long serialVersionUID = -77530299099972247L;
 
     private Integer attributeId;
 

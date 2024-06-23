@@ -4,17 +4,16 @@ import xyz.game.entity.EquipId;
 import xyz.game.dao.EquipIdDao;
 import xyz.game.service.EquipIdService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * (EquipId)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("equipIdService")
 public class EquipIdServiceImpl implements EquipIdService {
@@ -28,7 +27,7 @@ public class EquipIdServiceImpl implements EquipIdService {
      * @return 实例对象
      */
     @Override
-    public EquipId queryById(int id ) {
+    public EquipId queryById( ) {
         return this.equipIdDao.queryById();
     }
 
@@ -36,13 +35,11 @@ public class EquipIdServiceImpl implements EquipIdService {
      * 分页查询
      *
      * @param equipId 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<EquipId> queryByPage(EquipId equipId, PageRequest pageRequest) {
-        long total = this.equipIdDao.count(equipId);
-        return new PageImpl<>(this.equipIdDao.queryAllByLimit(equipId, pageRequest), pageRequest, total);
+    public List<EquipId> query(EquipId equipId) {
+        return this.equipIdDao.query(equipId);
     }
 
     /**
@@ -66,7 +63,7 @@ public class EquipIdServiceImpl implements EquipIdService {
     @Override
     public EquipId update(EquipId equipId) {
         this.equipIdDao.update(equipId);
-        return this.queryById(equipId.getEquipId());
+        return this.queryById();
     }
 
     /**
@@ -76,7 +73,7 @@ public class EquipIdServiceImpl implements EquipIdService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(int id ) {
+    public boolean deleteById( ) {
         return this.equipIdDao.deleteById() > 0;
     }
 }

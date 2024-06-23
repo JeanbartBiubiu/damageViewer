@@ -4,17 +4,16 @@ import xyz.game.entity.AttributeName;
 import xyz.game.dao.AttributeNameDao;
 import xyz.game.service.AttributeNameService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 属性名称表(AttributeName)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("attributeNameService")
 public class AttributeNameServiceImpl implements AttributeNameService {
@@ -36,13 +35,11 @@ public class AttributeNameServiceImpl implements AttributeNameService {
      * 分页查询
      *
      * @param attributeName 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<AttributeName> queryByPage(AttributeName attributeName, PageRequest pageRequest) {
-        long total = this.attributeNameDao.count(attributeName);
-        return new PageImpl<>(this.attributeNameDao.queryAllByLimit(attributeName, pageRequest), pageRequest, total);
+    public List<AttributeName> query(AttributeName attributeName) {
+        return this.attributeNameDao.query(attributeName);
     }
 
     /**

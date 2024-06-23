@@ -18,7 +18,7 @@ equip_idequip_imgconsumptionattribute_expression
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="EquipmentMap">
+    <select id="query" resultMap="EquipmentMap">
         select
 equip_idequip_imgconsumptionattribute_expression
         from ${whichGame}.equipment
@@ -36,7 +36,6 @@ equip_idequip_imgconsumptionattribute_expression
                 and attribute_expression = #{attributeExpression}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

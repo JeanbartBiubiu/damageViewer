@@ -17,7 +17,7 @@ version_idversion_codeupdate_time
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="VersionMap">
+    <select id="query" resultMap="VersionMap">
         select
 version_idversion_codeupdate_time
         from ${whichGame}.version
@@ -32,7 +32,6 @@ version_idversion_codeupdate_time
                 and update_time = #{updateTime}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

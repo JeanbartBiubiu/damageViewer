@@ -4,17 +4,16 @@ import xyz.game.entity.Level;
 import xyz.game.dao.LevelDao;
 import xyz.game.service.LevelService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 等级定义表(Level)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("levelService")
 public class LevelServiceImpl implements LevelService {
@@ -36,13 +35,11 @@ public class LevelServiceImpl implements LevelService {
      * 分页查询
      *
      * @param level 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<Level> queryByPage(Level level, PageRequest pageRequest) {
-        long total = this.levelDao.count(level);
-        return new PageImpl<>(this.levelDao.queryAllByLimit(level, pageRequest), pageRequest, total);
+    public List<Level> query(Level level) {
+        return this.levelDao.query(level);
     }
 
     /**

@@ -1,18 +1,15 @@
 package xyz.game.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import xyz.game.entity.GameInfo;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * (GameInfo)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
-@Mapper
 public interface GameInfoDao {
 
     /**
@@ -21,16 +18,15 @@ public interface GameInfoDao {
      * @param gameId 主键
      * @return 实例对象
      */
-    GameInfo queryById(@Param("gameId")int gameId,@Param("id2") int id2);
+    GameInfo queryById(Integer gameId);
 
     /**
      * 查询指定行数据
      *
      * @param gameInfo 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<GameInfo> query(@Param("param") GameInfo gameInfo, @Param("id2") int id2);
+    List<GameInfo> query(GameInfo gameInfo);
 
     /**
      * 统计总行数

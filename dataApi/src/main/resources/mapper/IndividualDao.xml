@@ -16,7 +16,7 @@ indiv_idindiv_img
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="IndividualMap">
+    <select id="query" resultMap="IndividualMap">
         select
 indiv_idindiv_img
         from ${whichGame}.individual
@@ -28,7 +28,6 @@ indiv_idindiv_img
                 and indiv_img = #{indivImg}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

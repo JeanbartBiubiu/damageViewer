@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.AttributeValue;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * 单位-属性-等级对应数据数值(AttributeValue)表服务接口
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public interface AttributeValueService {
 
@@ -18,16 +18,15 @@ public interface AttributeValueService {
      * @param  主键
      * @return 实例对象
      */
-    AttributeValue queryById(int id);
+    AttributeValue queryById( );
 
     /**
      * 分页查询
      *
      * @param attributeValue 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<AttributeValue> queryByPage(AttributeValue attributeValue, PageRequest pageRequest);
+    List<AttributeValue> query(AttributeValue attributeValue);
 
     /**
      * 新增数据
@@ -51,6 +50,6 @@ public interface AttributeValueService {
      * @param  主键
      * @return 是否成功
      */
-    boolean deleteById( int id);
+    boolean deleteById( );
 
 }

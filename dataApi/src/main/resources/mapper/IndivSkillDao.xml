@@ -16,7 +16,7 @@ indiv_idskill_id
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="IndivSkillMap">
+    <select id="query" resultMap="IndivSkillMap">
         select
 indiv_idskill_id
         from ${whichGame}.indiv_skill
@@ -28,7 +28,6 @@ indiv_idskill_id
                 and skill_id = #{skillId}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

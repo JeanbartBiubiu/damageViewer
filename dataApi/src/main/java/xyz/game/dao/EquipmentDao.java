@@ -1,18 +1,15 @@
 package xyz.game.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import xyz.game.entity.Equipment;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * 装备表(buff等状态效果也定义为装备)(Equipment)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
-@Mapper
 public interface EquipmentDao {
 
     /**
@@ -27,10 +24,9 @@ public interface EquipmentDao {
      * 查询指定行数据
      *
      * @param equipment 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<Equipment> queryAllByLimit(Equipment equipment, @Param("pageable") Pageable pageable);
+    List<Equipment> query(Equipment equipment);
 
     /**
      * 统计总行数

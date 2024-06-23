@@ -2,18 +2,18 @@ package xyz.game.controller;
 
 import xyz.game.entity.Language;
 import xyz.game.service.LanguageService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 /**
  * (Language)表控制层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @RestController
 @RequestMapping("language")
@@ -28,12 +28,11 @@ public class LanguageController {
      * 分页查询
      *
      * @param language 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<Language>> queryByPage(Language language, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.languageService.queryByPage(language, pageRequest));
+    public ResponseEntity<List<Language>> query(Language language) {
+        return ResponseEntity.ok(this.languageService.query(language));
     }
 
     /**

@@ -4,17 +4,16 @@ import xyz.game.entity.FormulaDefault;
 import xyz.game.dao.FormulaDefaultDao;
 import xyz.game.service.FormulaDefaultService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * (FormulaDefault)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("formulaDefaultService")
 public class FormulaDefaultServiceImpl implements FormulaDefaultService {
@@ -36,13 +35,11 @@ public class FormulaDefaultServiceImpl implements FormulaDefaultService {
      * 分页查询
      *
      * @param formulaDefault 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<FormulaDefault> queryByPage(FormulaDefault formulaDefault, PageRequest pageRequest) {
-        long total = this.formulaDefaultDao.count(formulaDefault);
-        return new PageImpl<>(this.formulaDefaultDao.queryAllByLimit(formulaDefault, pageRequest), pageRequest, total);
+    public List<FormulaDefault> query(FormulaDefault formulaDefault) {
+        return this.formulaDefaultDao.query(formulaDefault);
     }
 
     /**

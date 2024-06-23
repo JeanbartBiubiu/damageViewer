@@ -12,28 +12,28 @@
     <!--查询单个-->
     <select id="queryById" resultMap="GameInfoMap">
         select
-game_id,game_code,game_name,game_img
-        from ${whichGame}.game_info
+game_idgame_codegame_namegame_img
+        from default_table.game_info
         where game_id = #{gameId}
     </select>
 
     <!--查询指定行数据-->
     <select id="query" resultMap="GameInfoMap">
         select
-            game_id,game_code,game_name,game_img
+game_id,game_code,game_name,game_img
         from default_table.game_info
         <where>
-            <if test="param.gameId != null">
-                and game_id = #{param.gameId}
+            <if test="gameId != null">
+                and game_id = #{gameId}
             </if>
-            <if test="param.gameCode != null and param.gameCode != ''">
-                and game_code = #{param.gameCode}
+            <if test="gameCode != null and gameCode != ''">
+                and game_code = #{gameCode}
             </if>
-            <if test="param.gameName != null and param.gameName != ''">
-                and game_name = #{param.gameName}
+            <if test="gameName != null and gameName != ''">
+                and game_name = #{gameName}
             </if>
-            <if test="param.gameImg != null and param.gameImg != ''">
-                and game_img = #{param.gameImg}
+            <if test="gameImg != null and gameImg != ''">
+                and game_img = #{gameImg}
             </if>
         </where>
     </select>
@@ -60,8 +60,8 @@ game_id,game_code,game_name,game_img
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="gameId" useGeneratedKeys="true">
-        insert into default_table.game_info(game_code,game_name,game_img)
-        values (#{gameCode},#{gameName},#{gameImg})
+        insert into ${whichGame}.game_info(game_codegame_namegame_img)
+        values (#{gameCode}#{gameName}#{gameImg})
     </insert>
 
     <insert id="insertBatch" keyProperty="gameId" useGeneratedKeys="true">

@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.Language;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (Language)表服务接口
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public interface LanguageService {
 
@@ -24,10 +24,9 @@ public interface LanguageService {
      * 分页查询
      *
      * @param language 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<Language> queryByPage(Language language, PageRequest pageRequest);
+    List<Language> query(Language language);
 
     /**
      * 新增数据

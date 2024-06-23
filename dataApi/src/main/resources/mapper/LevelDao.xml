@@ -17,7 +17,7 @@ level_idlanguage_idlevel_name
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="LevelMap">
+    <select id="query" resultMap="LevelMap">
         select
 level_idlanguage_idlevel_name
         from ${whichGame}.level
@@ -32,7 +32,6 @@ level_idlanguage_idlevel_name
                 and level_name = #{levelName}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

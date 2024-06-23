@@ -6,10 +6,10 @@ import java.io.Serializable;
  * (FormulaImpl)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class FormulaImpl implements Serializable {
-    private static final long serialVersionUID = -53241657142481068L;
+    private static final long serialVersionUID = -66376987437664877L;
 
     private Integer attributeId;
 

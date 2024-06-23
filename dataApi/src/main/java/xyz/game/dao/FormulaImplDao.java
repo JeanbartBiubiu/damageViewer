@@ -1,18 +1,15 @@
 package xyz.game.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import xyz.game.entity.FormulaImpl;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * (FormulaImpl)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
-@Mapper
 public interface FormulaImplDao {
 
     /**
@@ -27,10 +24,9 @@ public interface FormulaImplDao {
      * 查询指定行数据
      *
      * @param formulaImpl 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<FormulaImpl> queryAllByLimit(FormulaImpl formulaImpl, @Param("pageable") Pageable pageable);
+    List<FormulaImpl> query(FormulaImpl formulaImpl);
 
     /**
      * 统计总行数

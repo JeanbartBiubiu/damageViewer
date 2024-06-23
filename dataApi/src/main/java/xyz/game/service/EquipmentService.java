@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.Equipment;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * 装备表(buff等状态效果也定义为装备)(Equipment)表服务接口
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public interface EquipmentService {
 
@@ -24,10 +24,9 @@ public interface EquipmentService {
      * 分页查询
      *
      * @param equipment 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<Equipment> queryByPage(Equipment equipment, PageRequest pageRequest);
+    List<Equipment> query(Equipment equipment);
 
     /**
      * 新增数据

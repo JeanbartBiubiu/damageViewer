@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 装备表(buff等状态效果也定义为装备)(Equipment)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class Equipment implements Serializable {
-    private static final long serialVersionUID = 426789836458751444L;
+    private static final long serialVersionUID = -62500384248752841L;
 
     private Integer equipId;
 

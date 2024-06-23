@@ -4,17 +4,16 @@ import xyz.game.entity.Equipment;
 import xyz.game.dao.EquipmentDao;
 import xyz.game.service.EquipmentService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 装备表(buff等状态效果也定义为装备)(Equipment)表服务实现类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @Service("equipmentService")
 public class EquipmentServiceImpl implements EquipmentService {
@@ -36,13 +35,11 @@ public class EquipmentServiceImpl implements EquipmentService {
      * 分页查询
      *
      * @param equipment 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<Equipment> queryByPage(Equipment equipment, PageRequest pageRequest) {
-        long total = this.equipmentDao.count(equipment);
-        return new PageImpl<>(this.equipmentDao.queryAllByLimit(equipment, pageRequest), pageRequest, total);
+    public List<Equipment> query(Equipment equipment) {
+        return this.equipmentDao.query(equipment);
     }
 
     /**

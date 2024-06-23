@@ -18,7 +18,7 @@ indiv_idattribute_idlevel_idvalue
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="AttributeValueMap">
+    <select id="query" resultMap="AttributeValueMap">
         select
 indiv_idattribute_idlevel_idvalue
         from ${whichGame}.attribute_value
@@ -36,7 +36,6 @@ indiv_idattribute_idlevel_idvalue
                 and value = #{value}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

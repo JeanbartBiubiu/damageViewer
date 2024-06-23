@@ -17,7 +17,7 @@ attribute_idformula_idformula_impl
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="FormulaImplMap">
+    <select id="query" resultMap="FormulaImplMap">
         select
 attribute_idformula_idformula_impl
         from ${whichGame}.formula_impl
@@ -32,7 +32,6 @@ attribute_idformula_idformula_impl
                 and formula_impl = #{formulaImpl}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

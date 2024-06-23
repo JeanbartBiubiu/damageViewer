@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 人物-技能关联表(IndivSkill)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class IndivSkill implements Serializable {
-    private static final long serialVersionUID = -44018894842947999L;
+    private static final long serialVersionUID = -27989640379918944L;
 
     private Integer indivId;
 

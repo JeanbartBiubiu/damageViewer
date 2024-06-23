@@ -2,18 +2,18 @@ package xyz.game.controller;
 
 import xyz.game.entity.IndivSkill;
 import xyz.game.service.IndivSkillService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 /**
  * 人物-技能关联表(IndivSkill)表控制层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @RestController
 @RequestMapping("indivSkill")
@@ -28,12 +28,11 @@ public class IndivSkillController {
      * 分页查询
      *
      * @param indivSkill 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<IndivSkill>> queryByPage(IndivSkill indivSkill, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.indivSkillService.queryByPage(indivSkill, pageRequest));
+    public ResponseEntity<List<IndivSkill>> query(IndivSkill indivSkill) {
+        return ResponseEntity.ok(this.indivSkillService.query(indivSkill));
     }
 
     /**
@@ -43,8 +42,8 @@ public class IndivSkillController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<IndivSkill> queryById(@PathVariable("id") int id) {
-        return ResponseEntity.ok(this.indivSkillService.queryById(id));
+    public ResponseEntity<IndivSkill> queryById(@PathVariable("id")int   id) {
+        return ResponseEntity.ok(this.indivSkillService.queryById());
     }
 
     /**
@@ -76,8 +75,8 @@ public class IndivSkillController {
      * @return 删除是否成功
      */
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(int id) {
-        return ResponseEntity.ok(this.indivSkillService.deleteById(id));
+    public ResponseEntity<Boolean> deleteById(int  id) {
+        return ResponseEntity.ok(this.indivSkillService.deleteById());
     }
 
 }

@@ -18,7 +18,7 @@ skill_idskill_nameskill_imgskill_type
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="SkillDefMap">
+    <select id="query" resultMap="SkillDefMap">
         select
 skill_idskill_nameskill_imgskill_type
         from ${whichGame}.skill_def
@@ -36,7 +36,6 @@ skill_idskill_nameskill_imgskill_type
                 and skill_type = #{skillType}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

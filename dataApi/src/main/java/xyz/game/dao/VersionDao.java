@@ -2,14 +2,13 @@ package xyz.game.dao;
 
 import xyz.game.entity.Version;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * 版本记录(Version)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-16 16:37:05
+ * @since 2024-06-23 21:23:34
  */
 public interface VersionDao {
 
@@ -25,10 +24,9 @@ public interface VersionDao {
      * 查询指定行数据
      *
      * @param version 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<Version> queryAllByLimit(Version version, @Param("pageable") Pageable pageable);
+    List<Version> query(Version version);
 
     /**
      * 统计总行数

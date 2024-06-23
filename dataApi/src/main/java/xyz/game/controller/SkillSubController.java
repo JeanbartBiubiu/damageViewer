@@ -2,18 +2,18 @@ package xyz.game.controller;
 
 import xyz.game.entity.SkillSub;
 import xyz.game.service.SkillSubService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 /**
  * (SkillSub)表控制层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 @RestController
 @RequestMapping("skillSub")
@@ -28,12 +28,11 @@ public class SkillSubController {
      * 分页查询
      *
      * @param skillSub 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<SkillSub>> queryByPage(SkillSub skillSub, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.skillSubService.queryByPage(skillSub, pageRequest));
+    public ResponseEntity<List<SkillSub>> query(SkillSub skillSub) {
+        return ResponseEntity.ok(this.skillSubService.query(skillSub));
     }
 
     /**

@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 技能定义表(SkillDef)实体类
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public class SkillDef implements Serializable {
-    private static final long serialVersionUID = -68868087103184520L;
+    private static final long serialVersionUID = 609050819844317414L;
 
     private Integer skillId;
 

@@ -1,14 +1,14 @@
 package xyz.game.service;
 
 import xyz.game.entity.SkillDef;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * 技能定义表(SkillDef)表服务接口
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
 public interface SkillDefService {
 
@@ -24,10 +24,9 @@ public interface SkillDefService {
      * 分页查询
      *
      * @param skillDef 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<SkillDef> queryByPage(SkillDef skillDef, PageRequest pageRequest);
+    List<SkillDef> query(SkillDef skillDef);
 
     /**
      * 新增数据

@@ -1,18 +1,15 @@
 package xyz.game.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import xyz.game.entity.SkillDef;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * 技能定义表(SkillDef)表数据库访问层
  *
  * @author makejava
- * @since 2024-06-15 19:17:13
+ * @since 2024-06-23 21:23:34
  */
-@Mapper
 public interface SkillDefDao {
 
     /**
@@ -27,10 +24,9 @@ public interface SkillDefDao {
      * 查询指定行数据
      *
      * @param skillDef 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<SkillDef> queryAllByLimit(SkillDef skillDef, @Param("pageable") Pageable pageable);
+    List<SkillDef> query(SkillDef skillDef);
 
     /**
      * 统计总行数

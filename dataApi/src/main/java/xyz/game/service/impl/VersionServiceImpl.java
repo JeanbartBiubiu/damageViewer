@@ -4,17 +4,16 @@ import xyz.game.entity.Version;
 import xyz.game.dao.VersionDao;
 import xyz.game.service.VersionService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 /**
  * 版本记录(Version)表服务实现类
  *
  * @author makejava
- * @since 2024-06-16 16:37:05
+ * @since 2024-06-23 21:23:34
  */
 @Service("versionService")
 public class VersionServiceImpl implements VersionService {
@@ -36,13 +35,11 @@ public class VersionServiceImpl implements VersionService {
      * 分页查询
      *
      * @param version 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<Version> queryByPage(Version version, PageRequest pageRequest) {
-        long total = this.versionDao.count(version);
-        return new PageImpl<>(this.versionDao.queryAllByLimit(version, pageRequest), pageRequest, total);
+    public List<Version> query(Version version) {
+        return this.versionDao.query(version);
     }
 
     /**

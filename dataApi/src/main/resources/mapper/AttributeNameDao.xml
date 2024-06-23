@@ -17,7 +17,7 @@ attribute_idlanguage_idattribute_name
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="AttributeNameMap">
+    <select id="query" resultMap="AttributeNameMap">
         select
 attribute_idlanguage_idattribute_name
         from ${whichGame}.attribute_name
@@ -32,7 +32,6 @@ attribute_idlanguage_idattribute_name
                 and attribute_name = #{attributeName}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

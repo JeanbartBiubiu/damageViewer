@@ -16,7 +16,7 @@ language_idlanguage_name
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="LanguageMap">
+    <select id="query" resultMap="LanguageMap">
         select
 language_idlanguage_name
         from ${whichGame}.language
@@ -28,7 +28,6 @@ language_idlanguage_name
                 and language_name = #{languageName}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

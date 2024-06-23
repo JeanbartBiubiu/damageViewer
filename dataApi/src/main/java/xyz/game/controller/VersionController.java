@@ -2,18 +2,18 @@ package xyz.game.controller;
 
 import xyz.game.entity.Version;
 import xyz.game.service.VersionService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 /**
  * 版本记录(Version)表控制层
  *
  * @author makejava
- * @since 2024-06-16 16:37:05
+ * @since 2024-06-23 21:23:34
  */
 @RestController
 @RequestMapping("version")
@@ -28,12 +28,11 @@ public class VersionController {
      * 分页查询
      *
      * @param version 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<Version>> queryByPage(Version version, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.versionService.queryByPage(version, pageRequest));
+    public ResponseEntity<List<Version>> query(Version version) {
+        return ResponseEntity.ok(this.versionService.query(version));
     }
 
     /**

@@ -16,7 +16,7 @@ equip_idskill_id
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="EquipIdMap">
+    <select id="query" resultMap="EquipIdMap">
         select
 equip_idskill_id
         from ${whichGame}.equip_id
@@ -28,7 +28,6 @@ equip_idskill_id
                 and skill_id = #{skillId}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->
