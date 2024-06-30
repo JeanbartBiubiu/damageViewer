@@ -1,5 +1,6 @@
 package xyz.game.service.impl;
 
+import xyz.game.dao.DDLDao;
 import xyz.game.entity.GameInfo;
 import xyz.game.dao.GameInfoDao;
 import xyz.game.service.GameInfoService;
@@ -17,8 +18,13 @@ import java.util.List;
  */
 @Service("gameInfoService")
 public class GameInfoServiceImpl implements GameInfoService {
-    @Resource
-    private GameInfoDao gameInfoDao;
+    private final GameInfoDao gameInfoDao;
+    private final DDLDao ddlDao;
+
+    public GameInfoServiceImpl(GameInfoDao gameInfoDao,DDLDao ddlDao) {
+        this.gameInfoDao = gameInfoDao;
+        this.ddlDao = ddlDao;
+    }
 
     /**
      * 通过ID查询单条数据
@@ -50,7 +56,26 @@ public class GameInfoServiceImpl implements GameInfoService {
      */
     @Override
     public GameInfo insert(GameInfo gameInfo) {
+        // todo DDL语句执行算事务？
         this.gameInfoDao.insert(gameInfo);
+        ddlDao.createDb(gameInfo.getGameCode());
+        ddlDao.createTableAttribute(gameInfo.getGameCode());
+        ddlDao.createTableAttributeName(gameInfo.getGameCode());
+        ddlDao.createTableAttributeValue(gameInfo.getGameCode());
+        ddlDao.createTableComputingLifeCycle(gameInfo.getGameCode());
+        ddlDao.createTableEquipId(gameInfo.getGameCode());
+        ddlDao.createTableEquipment(gameInfo.getGameCode());
+        ddlDao.createTableEquipmentName(gameInfo.getGameCode());
+        ddlDao.createTableFormulaDefault(gameInfo.getGameCode());
+        ddlDao.createTableFormulaImpl(gameInfo.getGameCode());
+        ddlDao.createTableIndividual(gameInfo.getGameCode());
+        ddlDao.createTableIndivName(gameInfo.getGameCode());
+        ddlDao.createTableIndivSkill(gameInfo.getGameCode());
+        ddlDao.createTableLanguage(gameInfo.getGameCode());
+        ddlDao.createTableLevel(gameInfo.getGameCode());
+        ddlDao.createTableSkillDef(gameInfo.getGameCode());
+        ddlDao.createTableSkillSub(gameInfo.getGameCode());
+        ddlDao.createTableVersion(gameInfo.getGameCode());
         return gameInfo;
     }
 

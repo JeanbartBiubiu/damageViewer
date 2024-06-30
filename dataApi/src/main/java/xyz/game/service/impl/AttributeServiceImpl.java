@@ -1,7 +1,11 @@
 package xyz.game.service.impl;
 
+import org.springframework.beans.BeanUtils;
+import xyz.game.dao.AttributeNameDao;
 import xyz.game.entity.Attribute;
 import xyz.game.dao.AttributeDao;
+import xyz.game.entity.AttributeName;
+import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.AttributeService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,8 @@ import java.util.List;
 public class AttributeServiceImpl implements AttributeService {
     @Resource
     private AttributeDao attributeDao;
+    @Resource
+    private AttributeNameDao attributeNameDao;
 
     /**
      * 通过ID查询单条数据
@@ -27,8 +33,13 @@ public class AttributeServiceImpl implements AttributeService {
      * @return 实例对象
      */
     @Override
-    public Attribute queryById(Integer attributeId) {
-        return this.attributeDao.queryById(attributeId);
+    public AttributeReq queryById(Integer attributeId) {
+        Attribute attribute = this.attributeDao.queryById(attributeId);
+        AttributeName attributeName = this.attributeNameDao.queryById(attributeId);
+        AttributeReq attributeReq = new AttributeReq();
+        BeanUtils.copyProperties(attribute,attributeReq);
+        BeanUtils.copyProperties(attributeName,attributeReq);
+        return attributeReq;
     }
 
     /**
@@ -38,8 +49,8 @@ public class AttributeServiceImpl implements AttributeService {
      * @return 查询结果
      */
     @Override
-    public List<Attribute> query(Attribute attribute) {
-        return this.attributeDao.query(attribute);
+    public List<AttributeReq> query(AttributeReq attribute) {
+        return this.attributeDao.queryJoin(attribute);
     }
 
     /**
@@ -49,7 +60,7 @@ public class AttributeServiceImpl implements AttributeService {
      * @return 实例对象
      */
     @Override
-    public Attribute insert(Attribute attribute) {
+    public AttributeReq insert(AttributeReq attribute) {
         this.attributeDao.insert(attribute);
         return attribute;
     }
@@ -61,7 +72,7 @@ public class AttributeServiceImpl implements AttributeService {
      * @return 实例对象
      */
     @Override
-    public Attribute update(Attribute attribute) {
+    public AttributeReq update(AttributeReq attribute) {
         this.attributeDao.update(attribute);
         return this.queryById(attribute.getAttributeId());
     }

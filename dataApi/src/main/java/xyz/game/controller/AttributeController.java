@@ -1,6 +1,7 @@
 package xyz.game.controller;
 
 import xyz.game.entity.Attribute;
+import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.AttributeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class AttributeController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<Attribute>> query(Attribute attribute) {
+    public ResponseEntity<List<AttributeReq>> query(AttributeReq attribute) {
         return ResponseEntity.ok(this.attributeService.query(attribute));
     }
 
@@ -42,7 +43,7 @@ public class AttributeController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<Attribute> queryById(@PathVariable("id") Integer id) {
+    public ResponseEntity<AttributeReq> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.attributeService.queryById(id));
     }
 
@@ -53,7 +54,7 @@ public class AttributeController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Attribute> add(Attribute attribute) {
+    public ResponseEntity<AttributeReq> add(AttributeReq attribute) {
         return ResponseEntity.ok(this.attributeService.insert(attribute));
     }
 
@@ -64,7 +65,7 @@ public class AttributeController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Attribute> edit(Attribute attribute) {
+    public ResponseEntity<AttributeReq> edit(AttributeReq attribute) {
         return ResponseEntity.ok(this.attributeService.update(attribute));
     }
 

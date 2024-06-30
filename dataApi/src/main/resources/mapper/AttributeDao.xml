@@ -18,7 +18,7 @@ attribute_idattribute_img
     <!--查询指定行数据-->
     <select id="query" resultMap="AttributeMap">
         select
-attribute_idattribute_img
+attribute_id,attribute_img
         from ${whichGame}.attribute
         <where>
             <if test="attributeId != null">
@@ -26,6 +26,25 @@ attribute_idattribute_img
             </if>
             <if test="attributeImg != null and attributeImg != ''">
                 and attribute_img = #{attributeImg}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryJoin" resultMap="AttributeMap">
+        select
+        a.attribute_id,attribute_img,b.attribute_name
+        from ${whichGame}.attribute a
+            left join ${whichGame}.attribute_name b
+        on a.attribute_id = b.attribute_id
+        <where>
+            <if test="attributeId != null">
+                and attribute_id = #{attributeId}
+            </if>
+            <if test="attributeImg != null and attributeImg != ''">
+                and attribute_img = #{attributeImg}
+            </if>
+            <if test="attributeName != null and attributeName != ''">
+                and attributeName = #{attributeName}
             </if>
         </where>
     </select>

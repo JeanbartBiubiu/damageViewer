@@ -2,6 +2,8 @@ package xyz.game.dao;
 
 import xyz.game.entity.Attribute;
 import org.apache.ibatis.annotations.Param;
+import xyz.game.entity.custom.AttributeReq;
+
 import java.util.List;
 
 /**
@@ -27,6 +29,9 @@ public interface AttributeDao {
      * @return 对象列表
      */
     List<Attribute> query(Attribute attribute);
+
+
+    List<AttributeReq> queryJoin(AttributeReq req);
 
     /**
      * 统计总行数

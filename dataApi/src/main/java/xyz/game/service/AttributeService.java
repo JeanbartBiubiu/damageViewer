@@ -1,6 +1,7 @@
 package xyz.game.service;
 
 import xyz.game.entity.Attribute;
+import xyz.game.entity.custom.AttributeReq;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface AttributeService {
      * @param attributeId 主键
      * @return 实例对象
      */
-    Attribute queryById(Integer attributeId);
+    AttributeReq queryById(Integer attributeId);
 
     /**
      * 分页查询
@@ -26,7 +27,7 @@ public interface AttributeService {
      * @param attribute 筛选条件
      * @return 查询结果
      */
-    List<Attribute> query(Attribute attribute);
+    List<AttributeReq> query(AttributeReq attribute);
 
     /**
      * 新增数据
@@ -34,7 +35,7 @@ public interface AttributeService {
      * @param attribute 实例对象
      * @return 实例对象
      */
-    Attribute insert(Attribute attribute);
+    AttributeReq insert(AttributeReq attribute);
 
     /**
      * 修改数据
@@ -42,7 +43,7 @@ public interface AttributeService {
      * @param attribute 实例对象
      * @return 实例对象
      */
-    Attribute update(Attribute attribute);
+    AttributeReq update(AttributeReq attribute);
 
     /**
      * 通过主键删除数据
