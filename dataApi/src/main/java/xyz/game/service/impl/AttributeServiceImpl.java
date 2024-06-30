@@ -61,7 +61,12 @@ public class AttributeServiceImpl implements AttributeService {
      */
     @Override
     public AttributeReq insert(AttributeReq attribute) {
-        this.attributeDao.insert(attribute);
+        Attribute a1 = new Attribute();
+        AttributeName a2 = new AttributeName();
+        BeanUtils.copyProperties(attribute,a1);
+        BeanUtils.copyProperties(attribute,a2);
+        this.attributeDao.insert(a1);
+        this.attributeNameDao.insert(a2);
         return attribute;
     }
 
@@ -73,7 +78,12 @@ public class AttributeServiceImpl implements AttributeService {
      */
     @Override
     public AttributeReq update(AttributeReq attribute) {
-        this.attributeDao.update(attribute);
+        Attribute a1 = new Attribute();
+        AttributeName a2 = new AttributeName();
+        BeanUtils.copyProperties(attribute,a1);
+        BeanUtils.copyProperties(attribute,a2);
+        this.attributeDao.update(a1);
+        this.attributeNameDao.update(a2);
         return this.queryById(attribute.getAttributeId());
     }
 
