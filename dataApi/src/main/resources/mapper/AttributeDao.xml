@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.game.dao.AttributeDao">
 
-    <resultMap type="xyz.game.entity.Attribute" id="AttributeMap">
+    <resultMap type="xyz.game.entity.custom.AttributeReq" id="AttributeMap">
         <result property="attributeId" column="attribute_id" jdbcType="INTEGER"/>
+        <result property="attributeName" column="attribute_name" jdbcType="VARCHAR"/>
         <result property="attributeImg" column="attribute_img" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="AttributeMap">
         select
-attribute_idattribute_img
+            attribute_id,attribute_img
         from ${whichGame}.attribute
         where attribute_id = #{attributeId}
     </select>
@@ -37,7 +38,7 @@ attribute_id,attribute_img
             left join ${whichGame}.attribute_name b
         on a.attribute_id = b.attribute_id
         <where>
-            <if test="attributeId != null">
+            <if test="attributeId != null and attributeId != ''">
                 and attribute_id = #{attributeId}
             </if>
             <if test="attributeImg != null and attributeImg != ''">
@@ -64,7 +65,10 @@ attribute_id,attribute_img
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="attributeId" useGeneratedKeys="true">
+    <insert id="insert" keyProperty="attributeId" useGeneratedKeys="true" parameterType="xyz.game.entity.Attribute">
+        <selectKey keyProperty="attributeId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into ${whichGame}.attribute(attribute_img)
         values (#{attributeImg})
     </insert>

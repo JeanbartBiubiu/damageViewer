@@ -1,6 +1,7 @@
 package xyz.game.controller;
 
-import xyz.game.entity.Attribute;
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.AttributeService;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
  * @since 2024-06-23 21:23:34
  */
 @RestController
-@RequestMapping("attribute")
+@RequestMapping("/attribute")
 public class AttributeController {
     /**
      * 服务对象
@@ -32,8 +33,13 @@ public class AttributeController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<AttributeReq>> query(AttributeReq attribute) {
-        return ResponseEntity.ok(this.attributeService.query(attribute));
+    public ResponseEntity<ResponseData<DataWithPage<AttributeReq>>> query(AttributeReq attribute) {
+        ResponseData<DataWithPage<AttributeReq>> resp = new ResponseData<>();
+        DataWithPage<AttributeReq> data = new DataWithPage<>();
+        data.setList(this.attributeService.query(attribute));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -54,7 +60,7 @@ public class AttributeController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<AttributeReq> add(AttributeReq attribute) {
+    public ResponseEntity<AttributeReq> add(@RequestBody AttributeReq attribute) {
         return ResponseEntity.ok(this.attributeService.insert(attribute));
     }
 
@@ -65,7 +71,7 @@ public class AttributeController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<AttributeReq> edit(AttributeReq attribute) {
+    public ResponseEntity<AttributeReq> edit(@RequestBody AttributeReq attribute) {
         return ResponseEntity.ok(this.attributeService.update(attribute));
     }
 
@@ -75,8 +81,8 @@ public class AttributeController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.attributeService.deleteById(id));
     }
 

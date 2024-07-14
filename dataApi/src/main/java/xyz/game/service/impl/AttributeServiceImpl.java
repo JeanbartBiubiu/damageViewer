@@ -1,5 +1,6 @@
 package xyz.game.service.impl;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import xyz.game.dao.AttributeNameDao;
 import xyz.game.entity.Attribute;
@@ -65,7 +66,8 @@ public class AttributeServiceImpl implements AttributeService {
         AttributeName a2 = new AttributeName();
         BeanUtils.copyProperties(attribute,a1);
         BeanUtils.copyProperties(attribute,a2);
-        this.attributeDao.insert(a1);
+        int insert = this.attributeDao.insert(a1);
+        a2.setAttributeId(insert);
         this.attributeNameDao.insert(a2);
         return attribute;
     }
@@ -82,8 +84,12 @@ public class AttributeServiceImpl implements AttributeService {
         AttributeName a2 = new AttributeName();
         BeanUtils.copyProperties(attribute,a1);
         BeanUtils.copyProperties(attribute,a2);
-        this.attributeDao.update(a1);
-        this.attributeNameDao.update(a2);
+        if (!Strings.isEmpty(a1.getAttributeImg())) {
+            this.attributeDao.update(a1);
+        }
+        if (!Strings.isEmpty(a2.getAttributeName())) {
+            this.attributeNameDao.update(a2);
+        }
         return this.queryById(attribute.getAttributeId());
     }
 

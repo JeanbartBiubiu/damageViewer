@@ -11,7 +11,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="LevelMap">
         select
-level_idlanguage_idlevel_name
+            level_id,language_id,level_name
         from ${whichGame}.level
         where level_id = #{levelId}
     </select>
@@ -19,7 +19,7 @@ level_idlanguage_idlevel_name
     <!--查询指定行数据-->
     <select id="query" resultMap="LevelMap">
         select
-level_idlanguage_idlevel_name
+            level_id,language_id,level_name
         from ${whichGame}.level
         <where>
             <if test="levelId != null">

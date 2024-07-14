@@ -1,6 +1,9 @@
 package xyz.game.controller;
 
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.IndivName;
+import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.IndivNameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +19,7 @@ import java.util.List;
  * @since 2024-06-23 21:23:34
  */
 @RestController
-@RequestMapping("indivName")
+@RequestMapping("indiv")
 public class IndivNameController {
     /**
      * 服务对象
@@ -31,8 +34,13 @@ public class IndivNameController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<IndivName>> query(IndivName indivName) {
-        return ResponseEntity.ok(this.indivNameService.query(indivName));
+    public ResponseEntity<ResponseData<DataWithPage<IndivName>>> query(IndivName indivName) {
+        ResponseData<DataWithPage<IndivName>> resp = new ResponseData<>();
+        DataWithPage<IndivName> data = new DataWithPage<>();
+        data.setList(this.indivNameService.query(indivName));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -53,7 +61,7 @@ public class IndivNameController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<IndivName> add(IndivName indivName) {
+    public ResponseEntity<IndivName> add(@RequestBody IndivName indivName) {
         return ResponseEntity.ok(this.indivNameService.insert(indivName));
     }
 
@@ -64,7 +72,7 @@ public class IndivNameController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<IndivName> edit(IndivName indivName) {
+    public ResponseEntity<IndivName> edit(@RequestBody IndivName indivName) {
         return ResponseEntity.ok(this.indivNameService.update(indivName));
     }
 
@@ -74,8 +82,8 @@ public class IndivNameController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable(value = "id") Integer id) {
         return ResponseEntity.ok(this.indivNameService.deleteById(id));
     }
 

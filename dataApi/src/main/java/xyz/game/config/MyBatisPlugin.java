@@ -1,5 +1,8 @@
 package xyz.game.config;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
@@ -12,6 +15,7 @@ import org.apache.ibatis.util.MapUtil;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -59,14 +63,21 @@ public class MyBatisPlugin implements Interceptor {
         // 原有参数列表
         Object paramMap = args[1];
         if (paramMap != null) {
-            // todo 普通的类型也转换为map
             if (!(paramMap instanceof Map)) {
-                return invocation.proceed();
+                System.out.println("偷偷转换了");
+                try {
+                    paramMap = JSON.parseObject(JSON.toJSONString(paramMap), HashMap.class);
+                }catch (Exception e){
+                    // 转换失败，新取自定义map，将其直接塞到自定义的map里
+                    MyParamMap<Object> myParamMap = new MyParamMap<>();
+                    myParamMap.put(defaultKey,args[1].toString());
+                    paramMap = myParamMap;
+                }
             }
         } else {
             paramMap = new MapperMethod.ParamMap<>();
-            args[1] = paramMap;
         }
+        args[1] = paramMap;
 
         Class<?> tClass = Class.forName(className);
 
@@ -85,5 +96,24 @@ public class MyBatisPlugin implements Interceptor {
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
+
+    private static final String defaultKey = "_default_v";
+
+    // mybatis mapper入参只有一个基本类型时，#{any}都会取这个基本类型的值替换，这个class是为了将其转换为map用的
+    public static class MyParamMap<V> extends HashMap<String, V> {
+        private static final long serialVersionUID = -12345324342L;
+
+        public MyParamMap() {
+        }
+
+        public V get(Object key) {
+            if (!super.containsKey(key)) {
+                return super.get(defaultKey);
+            } else {
+                return super.get(key);
+            }
+        }
+    }
+
 
 }

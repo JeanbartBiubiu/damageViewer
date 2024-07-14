@@ -19,7 +19,7 @@ indiv_idlanguage_idindiv_name
     <!--查询指定行数据-->
     <select id="query" resultMap="IndivNameMap">
         select
-indiv_idlanguage_idindiv_name
+            indiv_id,language_id,indiv_name
         from ${whichGame}.indiv_name
         <where>
             <if test="indivId != null">

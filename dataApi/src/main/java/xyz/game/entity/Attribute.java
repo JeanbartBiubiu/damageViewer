@@ -1,5 +1,8 @@
 package xyz.game.entity;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +11,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-06-23 21:23:34
  */
+@Data
 public class Attribute implements Serializable {
     private static final long serialVersionUID = 513159944406902136L;
 
@@ -16,23 +20,5 @@ public class Attribute implements Serializable {
      * 属性图片
      */
     private String attributeImg;
-
-
-    public Integer getAttributeId() {
-        return attributeId;
-    }
-
-    public void setAttributeId(Integer attributeId) {
-        this.attributeId = attributeId;
-    }
-
-    public String getAttributeImg() {
-        return attributeImg;
-    }
-
-    public void setAttributeImg(String attributeImg) {
-        this.attributeImg = attributeImg;
-    }
-
 }
 
