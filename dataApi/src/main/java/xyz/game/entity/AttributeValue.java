@@ -1,5 +1,7 @@
 package xyz.game.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-06-23 21:23:34
  */
+@Data
 public class AttributeValue implements Serializable {
     private static final long serialVersionUID = 324944027450552875L;
 
@@ -17,40 +20,8 @@ public class AttributeValue implements Serializable {
 
     private Integer levelId;
 
-    private Integer value;
+    private Double value;
 
-
-    public Integer getIndivId() {
-        return indivId;
-    }
-
-    public void setIndivId(Integer indivId) {
-        this.indivId = indivId;
-    }
-
-    public Integer getAttributeId() {
-        return attributeId;
-    }
-
-    public void setAttributeId(Integer attributeId) {
-        this.attributeId = attributeId;
-    }
-
-    public Integer getLevelId() {
-        return levelId;
-    }
-
-    public void setLevelId(Integer levelId) {
-        this.levelId = levelId;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
 
 }
 

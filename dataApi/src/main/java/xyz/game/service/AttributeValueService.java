@@ -18,7 +18,7 @@ public interface AttributeValueService {
      * @param  主键
      * @return 实例对象
      */
-    AttributeValue queryById( );
+    List<AttributeValue> queryById(int indivId);
 
     /**
      * 分页查询

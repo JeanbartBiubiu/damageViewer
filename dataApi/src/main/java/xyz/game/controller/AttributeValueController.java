@@ -1,6 +1,10 @@
 package xyz.game.controller;
 
+import org.apache.ibatis.annotations.Param;
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.AttributeValue;
+import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.AttributeValueService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +20,7 @@ import java.util.List;
  * @since 2024-06-23 21:23:34
  */
 @RestController
-@RequestMapping("attributeValue")
+@RequestMapping("useless")
 public class AttributeValueController {
     /**
      * 服务对象
@@ -30,7 +34,7 @@ public class AttributeValueController {
      * @param attributeValue 筛选条件
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<AttributeValue>> query(AttributeValue attributeValue) {
         return ResponseEntity.ok(this.attributeValueService.query(attributeValue));
     }
@@ -41,9 +45,14 @@ public class AttributeValueController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public ResponseEntity<AttributeValue> queryById(@PathVariable("id") int id) {
-        return ResponseEntity.ok(this.attributeValueService.queryById());
+    @GetMapping("/value")
+    public ResponseEntity<ResponseData<DataWithPage<AttributeValue>>> queryById(@Param("indivId") int id) {
+        ResponseData<DataWithPage<AttributeValue>> resp = new ResponseData<>();
+        DataWithPage<AttributeValue> data = new DataWithPage<>();
+        data.setList(this.attributeValueService.queryById(id));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**

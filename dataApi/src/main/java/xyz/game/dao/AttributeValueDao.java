@@ -18,7 +18,7 @@ public interface AttributeValueDao {
      * @param  主键
      * @return 实例对象
      */
-    AttributeValue queryById( );
+    List<AttributeValue> queryById(@Param("indivId") int indivId);
 
     /**
      * 查询指定行数据

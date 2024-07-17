@@ -6,15 +6,15 @@
         <result property="indivId" column="indiv_id" jdbcType="INTEGER"/>
         <result property="attributeId" column="attribute_id" jdbcType="INTEGER"/>
         <result property="levelId" column="level_id" jdbcType="INTEGER"/>
-        <result property="value" column="value" jdbcType="INTEGER"/>
+        <result property="value" column="value" jdbcType="DOUBLE"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="AttributeValueMap">
         select
-indiv_idattribute_idlevel_idvalue
+indiv_id,attribute_id,level_id,value
         from ${whichGame}.attribute_value
-        where  = #{}
+        where indiv_id = #{indivId}
     </select>
 
     <!--查询指定行数据-->

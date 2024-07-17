@@ -1,9 +1,12 @@
 package xyz.game.controller;
 
+import org.apache.ibatis.annotations.Param;
 import xyz.game.controller.global.DataWithPage;
 import xyz.game.controller.global.ResponseData;
+import xyz.game.entity.AttributeValue;
 import xyz.game.entity.IndivName;
 import xyz.game.entity.custom.AttributeReq;
+import xyz.game.service.AttributeValueService;
 import xyz.game.service.IndivNameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,9 @@ public class IndivNameController {
      */
     @Resource
     private IndivNameService indivNameService;
+
+    @Resource
+    private AttributeValueService attributeValueService;
 
     /**
      * 分页查询
@@ -85,6 +91,22 @@ public class IndivNameController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteById(@PathVariable(value = "id") Integer id) {
         return ResponseEntity.ok(this.indivNameService.deleteById(id));
+    }
+
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("/values")
+    public ResponseEntity<ResponseData<DataWithPage<AttributeValue>>> queryById(@RequestParam("indivId") int id) {
+        ResponseData<DataWithPage<AttributeValue>> resp = new ResponseData<>();
+        DataWithPage<AttributeValue> data = new DataWithPage<>();
+        data.setList(this.attributeValueService.queryById(id));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
 }

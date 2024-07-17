@@ -27,8 +27,8 @@ public class AttributeValueServiceImpl implements AttributeValueService {
      * @return 实例对象
      */
     @Override
-    public AttributeValue queryById( ) {
-        return this.attributeValueDao.queryById();
+    public List<AttributeValue> queryById(int indivId) {
+        return this.attributeValueDao.queryById(indivId);
     }
 
     /**
@@ -63,7 +63,7 @@ public class AttributeValueServiceImpl implements AttributeValueService {
     @Override
     public AttributeValue update(AttributeValue attributeValue) {
         this.attributeValueDao.update(attributeValue);
-        return this.queryById();
+        return this.queryById(0).get(0);
     }
 
     /**
