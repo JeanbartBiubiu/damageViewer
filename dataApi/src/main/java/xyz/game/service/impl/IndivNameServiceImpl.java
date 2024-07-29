@@ -50,6 +50,13 @@ public class IndivNameServiceImpl implements IndivNameService {
      */
     @Override
     public IndivName insert(IndivName indivName) {
+        Integer id = this.indivNameDao.maxId();
+        if (id == null) {
+            id = 1;
+        } else {
+            id += 1;
+        }
+        indivName.setIndivId(id);
         this.indivNameDao.insert(indivName);
         return indivName;
     }

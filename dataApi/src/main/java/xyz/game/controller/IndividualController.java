@@ -1,6 +1,8 @@
 package xyz.game.controller;
 
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.Individual;
+import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.IndividualService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,8 +55,10 @@ public class IndividualController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Individual> add(Individual individual) {
-        return ResponseEntity.ok(this.individualService.insert(individual));
+    public ResponseEntity<ResponseData<Individual>> add(Individual individual) {
+        ResponseData<Individual> resp = new ResponseData<>();
+        resp.setData(this.individualService.insert(individual));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -64,8 +68,10 @@ public class IndividualController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Individual> edit(Individual individual) {
-        return ResponseEntity.ok(this.individualService.update(individual));
+    public ResponseEntity<ResponseData<Individual>> edit(Individual individual) {
+        ResponseData<Individual> resp = new ResponseData<>();
+        resp.setData(this.individualService.update(individual));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -75,8 +81,10 @@ public class IndividualController {
      * @return 删除是否成功
      */
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.individualService.deleteById(id));
+    public ResponseEntity<ResponseData<Boolean>> deleteById(Integer id) {
+        ResponseData<Boolean> resp = new ResponseData<>();
+        resp.setData(this.individualService.deleteById(id));
+        return ResponseEntity.ok(resp);
     }
 
 }

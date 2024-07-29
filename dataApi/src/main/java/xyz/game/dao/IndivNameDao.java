@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface IndivNameDao {
 
+    Integer maxId();
+
     /**
      * 通过ID查询单条数据
      *

@@ -5,6 +5,7 @@ import xyz.game.controller.global.DataWithPage;
 import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.AttributeValue;
 import xyz.game.entity.IndivName;
+import xyz.game.entity.Individual;
 import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.AttributeValueService;
 import xyz.game.service.IndivNameService;
@@ -67,8 +68,10 @@ public class IndivNameController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<IndivName> add(@RequestBody IndivName indivName) {
-        return ResponseEntity.ok(this.indivNameService.insert(indivName));
+    public ResponseEntity<ResponseData<IndivName>> add(@RequestBody IndivName indivName) {
+        ResponseData<IndivName> resp = new ResponseData<>();
+        resp.setData(this.indivNameService.insert(indivName));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -78,8 +81,10 @@ public class IndivNameController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<IndivName> edit(@RequestBody IndivName indivName) {
-        return ResponseEntity.ok(this.indivNameService.update(indivName));
+    public ResponseEntity<ResponseData<IndivName>> edit(@RequestBody IndivName indivName) {
+        ResponseData<IndivName> resp = new ResponseData<>();
+        resp.setData(this.indivNameService.update(indivName));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -89,8 +94,10 @@ public class IndivNameController {
      * @return 删除是否成功
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable(value = "id") Integer id) {
-        return ResponseEntity.ok(this.indivNameService.deleteById(id));
+    public ResponseEntity<ResponseData<Boolean>> deleteById(@PathVariable(value = "id") Integer id) {
+        ResponseData<Boolean> resp = new ResponseData<>();
+        resp.setData(this.indivNameService.deleteById(id));
+        return ResponseEntity.ok(resp);
     }
 
     /**
