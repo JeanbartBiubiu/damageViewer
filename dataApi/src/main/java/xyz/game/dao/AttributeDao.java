@@ -20,7 +20,7 @@ public interface AttributeDao {
      * @param attributeId 主键
      * @return 实例对象
      */
-    Attribute queryById(Integer attributeId);
+    AttributeReq queryById(Integer attributeId);
 
     /**
      * 查询指定行数据
@@ -40,6 +40,7 @@ public interface AttributeDao {
      * @return 总行数
      */
     long count(Attribute attribute);
+    Integer maxId();
 
     /**
      * 新增数据

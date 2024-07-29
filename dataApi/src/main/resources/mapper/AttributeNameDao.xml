@@ -11,9 +11,9 @@
     <!--查询单个-->
     <select id="queryById" resultMap="AttributeNameMap">
         select
-attribute_idlanguage_idattribute_name
+            attribute_id,language_id,attribute_name
         from ${whichGame}.attribute_name
-        where attribute_id = #{attributeId}
+            where attribute_id = #{attributeId}
     </select>
 
     <!--查询指定行数据-->
@@ -52,9 +52,9 @@ attribute_idlanguage_idattribute_name
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute_name(attribute_name)
-        values (#{attributeName})
+    <insert id="insert">
+        insert into ${whichGame}.attribute_name(attribute_id,attribute_name)
+        values (#{attributeId},#{attributeName})
     </insert>
 
     <insert id="insertBatch" keyProperty="attributeId" useGeneratedKeys="true">

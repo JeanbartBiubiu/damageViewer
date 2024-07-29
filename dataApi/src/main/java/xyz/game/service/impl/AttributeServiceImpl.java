@@ -2,6 +2,7 @@ package xyz.game.service.impl;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import xyz.game.dao.AttributeNameDao;
 import xyz.game.entity.Attribute;
 import xyz.game.dao.AttributeDao;
@@ -35,12 +36,10 @@ public class AttributeServiceImpl implements AttributeService {
      */
     @Override
     public AttributeReq queryById(Integer attributeId) {
-        Attribute attribute = this.attributeDao.queryById(attributeId);
+        AttributeReq attribute = this.attributeDao.queryById(attributeId);
         AttributeName attributeName = this.attributeNameDao.queryById(attributeId);
-        AttributeReq attributeReq = new AttributeReq();
-        BeanUtils.copyProperties(attribute,attributeReq);
-        BeanUtils.copyProperties(attributeName,attributeReq);
-        return attributeReq;
+        BeanUtils.copyProperties(attributeName,attribute);
+        return attribute;
     }
 
     /**
@@ -60,14 +59,17 @@ public class AttributeServiceImpl implements AttributeService {
      * @param attribute 实例对象
      * @return 实例对象
      */
+    @Transactional
     @Override
     public AttributeReq insert(AttributeReq attribute) {
         Attribute a1 = new Attribute();
         AttributeName a2 = new AttributeName();
         BeanUtils.copyProperties(attribute,a1);
         BeanUtils.copyProperties(attribute,a2);
-        int insert = this.attributeDao.insert(a1);
-        a2.setAttributeId(insert);
+        Integer id = this.attributeDao.maxId()+1;
+        a1.setAttributeId(id);
+        a2.setAttributeId(id);
+        this.attributeDao.insert(a1);
         this.attributeNameDao.insert(a2);
         return attribute;
     }
@@ -78,6 +80,7 @@ public class AttributeServiceImpl implements AttributeService {
      * @param attribute 实例对象
      * @return 实例对象
      */
+    @Transactional
     @Override
     public AttributeReq update(AttributeReq attribute) {
         Attribute a1 = new Attribute();
@@ -99,8 +102,10 @@ public class AttributeServiceImpl implements AttributeService {
      * @param attributeId 主键
      * @return 是否成功
      */
+    @Transactional
     @Override
     public boolean deleteById(Integer attributeId) {
-        return this.attributeDao.deleteById(attributeId) > 0;
+        this.attributeDao.deleteById(attributeId);
+        return this.attributeNameDao.deleteById(attributeId) > 0;
     }
 }

@@ -64,13 +64,15 @@ attribute_id,attribute_img
         </where>
     </select>
 
+    <select id="maxId" resultType="java.lang.Integer">
+        select max(attribute_id)
+        from ${whichGame}.attribute
+    </select>
+
     <!--新增所有列-->
-    <insert id="insert" keyProperty="attributeId" useGeneratedKeys="true" parameterType="xyz.game.entity.Attribute">
-        <selectKey keyProperty="attributeId" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into ${whichGame}.attribute(attribute_img)
-        values (#{attributeImg})
+    <insert id="insert" parameterType="xyz.game.entity.Attribute">
+        insert into ${whichGame}.attribute(attribute_id,attribute_img)
+        values (#{attributeId},#{attributeImg})
     </insert>
 
     <insert id="insertBatch" keyProperty="attributeId" useGeneratedKeys="true">

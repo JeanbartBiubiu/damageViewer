@@ -60,8 +60,10 @@ public class AttributeController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<AttributeReq> add(@RequestBody AttributeReq attribute) {
-        return ResponseEntity.ok(this.attributeService.insert(attribute));
+    public ResponseEntity<ResponseData<AttributeReq>> add(@RequestBody AttributeReq attribute) {
+        ResponseData<AttributeReq> resp = new ResponseData<>();
+        resp.setData(this.attributeService.insert(attribute));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -71,8 +73,10 @@ public class AttributeController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<AttributeReq> edit(@RequestBody AttributeReq attribute) {
-        return ResponseEntity.ok(this.attributeService.update(attribute));
+    public ResponseEntity<ResponseData<AttributeReq>> edit(@RequestBody AttributeReq attribute) {
+        ResponseData<AttributeReq> resp = new ResponseData<>();
+        resp.setData(this.attributeService.update(attribute));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -82,8 +86,10 @@ public class AttributeController {
      * @return 删除是否成功
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.attributeService.deleteById(id));
+    public ResponseEntity<ResponseData<Boolean>> deleteById(@PathVariable("id") Integer id) {
+        ResponseData<Boolean> resp = new ResponseData<>();
+        resp.setData(this.attributeService.deleteById(id));
+        return ResponseEntity.ok(resp);
     }
 
 }
