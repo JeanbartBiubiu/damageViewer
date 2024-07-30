@@ -8,4 +8,5 @@ public class AttributeReq {
     private String attributeImg;
     private Integer languageId;
     private String attributeName;
+    private Integer type;
 }

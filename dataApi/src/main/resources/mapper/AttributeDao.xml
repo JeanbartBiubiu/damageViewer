@@ -47,6 +47,9 @@ attribute_id,attribute_img
             <if test="attributeName != null and attributeName != ''">
                 and attributeName = #{attributeName}
             </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
         </where>
     </select>
 

@@ -50,6 +50,13 @@ public class LevelServiceImpl implements LevelService {
      */
     @Override
     public Level insert(Level level) {
+        Integer id = this.levelDao.maxId();
+        if (id == null){
+            id = 1;
+        }else{
+            id +=1 ;
+        }
+        level.setLevelId(id);
         this.levelDao.insert(level);
         return level;
     }

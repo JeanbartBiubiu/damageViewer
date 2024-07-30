@@ -44,6 +44,8 @@ public interface LevelDao {
      */
     int insert(Level level);
 
+    Integer maxId();
+
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
