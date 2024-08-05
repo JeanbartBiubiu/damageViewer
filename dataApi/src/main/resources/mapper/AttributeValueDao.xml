@@ -64,11 +64,12 @@ indiv_idattribute_idlevel_idvalue
         values (#{indivId}#{attributeId}#{levelId}#{value})
     </insert>
 
-    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute_value(indiv_idattribute_idlevel_idvalue)
-        values
+    <insert id="insertBatch">
+        insert into
+        ${whichGame}.attribute_value(indiv_id,attribute_id,level_id,value)
+            values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.indivId}#{entity.attributeId}#{entity.levelId}#{entity.value})
+            (#{entity.indivId},#{entity.attributeId},#{entity.levelId},#{entity.value})
         </foreach>
     </insert>
 
@@ -105,6 +106,14 @@ indiv_id = values(indiv_id)attribute_id = values(attribute_id)level_id = values(
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ${whichGame}.attribute_value where  = #{}
+    </delete>
+
+
+    <delete id="deleteByIndivId">
+        delete
+            from ${whichGame}.attribute_value
+        where
+            indiv_id = #{id}
     </delete>
 
 </mapper>

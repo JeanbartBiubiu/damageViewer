@@ -20,6 +20,8 @@ public interface AttributeValueService {
      */
     List<AttributeValue> queryById(int indivId);
 
+    boolean settingValues(List<AttributeValue> list);
+
     /**
      * 分页查询
      *

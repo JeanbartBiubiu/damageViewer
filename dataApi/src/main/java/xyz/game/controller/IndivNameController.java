@@ -116,5 +116,18 @@ public class IndivNameController {
         return ResponseEntity.ok(resp);
     }
 
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @PutMapping("/values")
+    public ResponseEntity<ResponseData<Boolean>> settingValues(@RequestBody List<AttributeValue> list) {
+        ResponseData<Boolean> resp = new ResponseData<>();
+        resp.setData(this.attributeValueService.settingValues(list));
+        return ResponseEntity.ok(resp);
+    }
+
 }
 

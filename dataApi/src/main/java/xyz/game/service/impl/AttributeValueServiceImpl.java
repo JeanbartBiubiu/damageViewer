@@ -1,5 +1,6 @@
 package xyz.game.service.impl;
 
+import org.springframework.transaction.annotation.Transactional;
 import xyz.game.entity.AttributeValue;
 import xyz.game.dao.AttributeValueDao;
 import xyz.game.service.AttributeValueService;
@@ -29,6 +30,18 @@ public class AttributeValueServiceImpl implements AttributeValueService {
     @Override
     public List<AttributeValue> queryById(int indivId) {
         return this.attributeValueDao.queryById(indivId);
+    }
+
+    @Transactional
+    @Override
+    public boolean settingValues(List<AttributeValue> list) {
+        if (list == null || list.isEmpty()){
+            return false;
+        }
+        int id = list.get(0).getIndivId();
+        this.attributeValueDao.deleteByIndivId(id);
+        this.attributeValueDao.insertBatch(list);
+        return true;
     }
 
     /**

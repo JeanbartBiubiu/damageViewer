@@ -75,7 +75,9 @@ public interface AttributeValueDao {
      * @param  主键
      * @return 影响行数
      */
-    int deleteById( );
+    int deleteById();
+
+    int deleteByIndivId(@Param("id")int id);
 
 }
 
