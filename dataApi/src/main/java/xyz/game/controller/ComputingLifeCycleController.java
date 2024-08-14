@@ -1,6 +1,9 @@
 package xyz.game.controller;
 
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.ComputingLifeCycle;
+import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.ComputingLifeCycleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +19,7 @@ import java.util.List;
  * @since 2024-06-23 21:23:34
  */
 @RestController
-@RequestMapping("computingLifeCycle")
+@RequestMapping("lifeCycle")
 public class ComputingLifeCycleController {
     /**
      * 服务对象
@@ -31,8 +34,13 @@ public class ComputingLifeCycleController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<ComputingLifeCycle>> query(ComputingLifeCycle computingLifeCycle) {
-        return ResponseEntity.ok(this.computingLifeCycleService.query(computingLifeCycle));
+    public ResponseEntity<ResponseData<DataWithPage<ComputingLifeCycle>>> query(ComputingLifeCycle computingLifeCycle) {
+        ResponseData<DataWithPage<ComputingLifeCycle>> resp = new ResponseData<>();
+        DataWithPage<ComputingLifeCycle> data = new DataWithPage<>();
+        data.setList(this.computingLifeCycleService.query(computingLifeCycle));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -53,8 +61,10 @@ public class ComputingLifeCycleController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<ComputingLifeCycle> add(ComputingLifeCycle computingLifeCycle) {
-        return ResponseEntity.ok(this.computingLifeCycleService.insert(computingLifeCycle));
+    public ResponseEntity<ResponseData<ComputingLifeCycle>> add(@RequestBody ComputingLifeCycle computingLifeCycle) {
+        ResponseData<ComputingLifeCycle> resp = new ResponseData<>();
+        resp.setData(this.computingLifeCycleService.insert(computingLifeCycle));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -64,8 +74,10 @@ public class ComputingLifeCycleController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<ComputingLifeCycle> edit(ComputingLifeCycle computingLifeCycle) {
-        return ResponseEntity.ok(this.computingLifeCycleService.update(computingLifeCycle));
+    public ResponseEntity<ResponseData<ComputingLifeCycle>> edit(@RequestBody ComputingLifeCycle computingLifeCycle) {
+        ResponseData<ComputingLifeCycle> resp = new ResponseData<>();
+        resp.setData(this.computingLifeCycleService.update(computingLifeCycle));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -75,8 +87,10 @@ public class ComputingLifeCycleController {
      * @return 删除是否成功
      */
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.computingLifeCycleService.deleteById(id));
+    public ResponseEntity<ResponseData<Boolean>> deleteById(@PathVariable("id")Integer id) {
+        ResponseData<Boolean> resp = new ResponseData<>();
+        resp.setData(this.computingLifeCycleService.deleteById(id));
+        return ResponseEntity.ok(resp);
     }
 
 }
