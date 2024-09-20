@@ -63,7 +63,7 @@ public class EquipmentNameServiceImpl implements EquipmentNameService {
     @Override
     public EquipmentName update(EquipmentName equipmentName) {
         this.equipmentNameDao.update(equipmentName);
-        return this.queryById(equipmentName.getEquipId());
+        return this.queryById(equipmentName.getEquipmentId());
     }
 
     /**

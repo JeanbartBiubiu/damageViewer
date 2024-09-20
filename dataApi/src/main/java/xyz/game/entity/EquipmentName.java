@@ -1,5 +1,7 @@
 package xyz.game.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,39 +10,15 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-06-23 21:23:34
  */
+@Data
 public class EquipmentName implements Serializable {
     private static final long serialVersionUID = -78473568208455997L;
 
-    private Integer equipId;
+    private Integer equipmentId;
 
     private Integer languageId;
 
-    private String equipName;
-
-
-    public Integer getEquipId() {
-        return equipId;
-    }
-
-    public void setEquipId(Integer equipId) {
-        this.equipId = equipId;
-    }
-
-    public Integer getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(Integer languageId) {
-        this.languageId = languageId;
-    }
-
-    public String getEquipName() {
-        return equipName;
-    }
-
-    public void setEquipName(String equipName) {
-        this.equipName = equipName;
-    }
+    private String equipmentName;
 
 }
 

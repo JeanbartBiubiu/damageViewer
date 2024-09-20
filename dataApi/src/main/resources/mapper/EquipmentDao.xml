@@ -3,28 +3,43 @@
 <mapper namespace="xyz.game.dao.EquipmentDao">
 
     <resultMap type="xyz.game.entity.Equipment" id="EquipmentMap">
-        <result property="equipId" column="equip_id" jdbcType="INTEGER"/>
-        <result property="equipImg" column="equip_img" jdbcType="VARCHAR"/>
+        <result property="equipmentId" column="equip_id" jdbcType="INTEGER"/>
+        <result property="equipmentImg" column="equip_img" jdbcType="VARCHAR"/>
+        <result property="equipmentName" column="equip_name" jdbcType="VARCHAR"/>
         <result property="consumption" column="consumption" jdbcType="INTEGER"/>
         <result property="attributeExpression" column="attribute_expression" jdbcType="VARCHAR"/>
+        <result property="subEquips" column="sub_equips" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <select id="maxId" resultType="java.lang.Integer">
+        select max(equip_id)
+        from ${whichGame}.equipment
+    </select>
 
     <!--查询单个-->
     <select id="queryById" resultMap="EquipmentMap">
         select
-equip_idequip_imgconsumptionattribute_expression
-        from ${whichGame}.equipment
-        where equip_id = #{equipId}
+        a.equip_id,equip_name,equip_img,consumption,attribute_expression,sub_equips
+        from ${whichGame}.equipment a left join ${whichGame}.equipment_name b on (a.equip_id = b.equip_id )
+        <where>
+                a.equip_id = #{equipmentId}
+        </where>
     </select>
 
     <!--查询指定行数据-->
     <select id="query" resultMap="EquipmentMap">
         select
-equip_idequip_imgconsumptionattribute_expression
-        from ${whichGame}.equipment
+            a.equip_id,equip_name,equip_img,consumption,attribute_expression,sub_equips
+        from ${whichGame}.equipment a left join ${whichGame}.equipment_name b on (a.equip_id = b.equip_id
         <where>
-            <if test="equipId != null">
-                and equip_id = #{equipId}
+            <if test="equipName != null">
+                and b.equip_name = #{equipIName}
+            </if>
+        </where>
+        )
+        <where>
+            <if test="equipmentId != null">
+                and a.equip_id = #{equipmentId}
             </if>
             <if test="equipImg != null and equipImg != ''">
                 and equip_img = #{equipImg}
@@ -43,8 +58,8 @@ equip_idequip_imgconsumptionattribute_expression
         select count(1)
         from ${whichGame}.equipment
         <where>
-            <if test="equipId != null">
-                and equip_id = #{equipId}
+            <if test="equipmentId != null">
+                and equip_id = #{equipmentId}
             </if>
             <if test="equipImg != null and equipImg != ''">
                 and equip_img = #{equipImg}
@@ -60,8 +75,8 @@ equip_idequip_imgconsumptionattribute_expression
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="equipId" useGeneratedKeys="true">
-        insert into ${whichGame}.equipment(equip_imgconsumptionattribute_expression)
-        values (#{equipImg}#{consumption}#{attributeExpression})
+        insert into ${whichGame}.equipment(equip_id,equip_img,consumption,attribute_expression)
+        values (#{equipmentId},#{equipmentImg},#{consumption},#{attributeExpression})
     </insert>
 
     <insert id="insertBatch" keyProperty="equipId" useGeneratedKeys="true">
@@ -86,8 +101,8 @@ equip_img = values(equip_img)consumption = values(consumption)attribute_expressi
     <update id="update">
         update ${whichGame}.equipment
         <set>
-            <if test="equipImg != null and equipImg != ''">
-                equip_img = #{equipImg},
+            <if test="equipmentImg != null and equipmentImg != ''">
+                equip_img = #{equipmentImg},
             </if>
             <if test="consumption != null">
                 consumption = #{consumption},
@@ -96,7 +111,7 @@ equip_img = values(equip_img)consumption = values(consumption)attribute_expressi
                 attribute_expression = #{attributeExpression},
             </if>
         </set>
-        where equip_id = #{equipId}
+        where equip_id = #{equipmentId}
     </update>
 
     <!--通过主键删除-->

@@ -1,6 +1,11 @@
 package xyz.game.controller;
 
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
+import xyz.game.entity.ComputingLifeCycle;
 import xyz.game.entity.Equipment;
+import xyz.game.entity.custom.AttributeReq;
+import xyz.game.entity.custom.EquipmentReq;
 import xyz.game.service.EquipmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +36,13 @@ public class EquipmentController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<Equipment>> query(Equipment equipment) {
-        return ResponseEntity.ok(this.equipmentService.query(equipment));
+    public ResponseEntity<ResponseData<DataWithPage<EquipmentReq>>> query(EquipmentReq equipment) {
+        ResponseData<DataWithPage<EquipmentReq>> resp = new ResponseData<>();
+        DataWithPage<EquipmentReq> data = new DataWithPage<>();
+        data.setList(this.equipmentService.query(equipment));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -42,7 +52,7 @@ public class EquipmentController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<Equipment> queryById(@PathVariable("id") Integer id) {
+    public ResponseEntity<EquipmentReq> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.equipmentService.queryById(id));
     }
 
@@ -53,8 +63,10 @@ public class EquipmentController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Equipment> add(Equipment equipment) {
-        return ResponseEntity.ok(this.equipmentService.insert(equipment));
+    public ResponseEntity<ResponseData<EquipmentReq>> add(@RequestBody EquipmentReq equipment) {
+        ResponseData<EquipmentReq> resp = new ResponseData<>();
+        resp.setData(this.equipmentService.insert(equipment));
+        return ResponseEntity.ok(resp);
     }
 
     /**
@@ -64,8 +76,10 @@ public class EquipmentController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Equipment> edit(Equipment equipment) {
-        return ResponseEntity.ok(this.equipmentService.update(equipment));
+    public ResponseEntity<ResponseData<EquipmentReq>> edit(@RequestBody EquipmentReq equipment) {
+        ResponseData<EquipmentReq> resp = new ResponseData<>();
+        resp.setData(this.equipmentService.update(equipment));
+        return ResponseEntity.ok(resp);
     }
 
     /**

@@ -86,7 +86,7 @@ public class ComputingLifeCycleController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<ResponseData<Boolean>> deleteById(@PathVariable("id")Integer id) {
         ResponseData<Boolean> resp = new ResponseData<>();
         resp.setData(this.computingLifeCycleService.deleteById(id));

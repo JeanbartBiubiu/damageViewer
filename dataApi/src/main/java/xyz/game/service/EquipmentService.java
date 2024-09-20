@@ -1,6 +1,7 @@
 package xyz.game.service;
 
 import xyz.game.entity.Equipment;
+import xyz.game.entity.custom.EquipmentReq;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface EquipmentService {
      * @param equipId 主键
      * @return 实例对象
      */
-    Equipment queryById(Integer equipId);
+    EquipmentReq queryById(Integer equipId);
 
     /**
      * 分页查询
@@ -26,7 +27,7 @@ public interface EquipmentService {
      * @param equipment 筛选条件
      * @return 查询结果
      */
-    List<Equipment> query(Equipment equipment);
+    List<EquipmentReq> query(EquipmentReq equipment);
 
     /**
      * 新增数据
@@ -34,7 +35,7 @@ public interface EquipmentService {
      * @param equipment 实例对象
      * @return 实例对象
      */
-    Equipment insert(Equipment equipment);
+    EquipmentReq insert(EquipmentReq equipment);
 
     /**
      * 修改数据
@@ -42,7 +43,7 @@ public interface EquipmentService {
      * @param equipment 实例对象
      * @return 实例对象
      */
-    Equipment update(Equipment equipment);
+    EquipmentReq update(EquipmentReq equipment);
 
     /**
      * 通过主键删除数据

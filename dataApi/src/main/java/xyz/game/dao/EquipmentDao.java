@@ -2,6 +2,8 @@ package xyz.game.dao;
 
 import xyz.game.entity.Equipment;
 import org.apache.ibatis.annotations.Param;
+import xyz.game.entity.custom.EquipmentReq;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ import java.util.List;
  * @since 2024-06-23 21:23:34
  */
 public interface EquipmentDao {
+    Integer maxId();
 
     /**
      * 通过ID查询单条数据

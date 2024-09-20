@@ -1,5 +1,7 @@
 package xyz.game.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,14 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-06-23 21:23:34
  */
+@Data
 public class Equipment implements Serializable {
     private static final long serialVersionUID = -62500384248752841L;
 
-    private Integer equipId;
+    private Integer equipmentId;
 
-    private String equipImg;
+    private String equipmentImg;
+    private String equipmentName;
 
     private Integer consumption;
 /**
@@ -21,38 +25,10 @@ public class Equipment implements Serializable {
      */
     private String attributeExpression;
 
-
-    public Integer getEquipId() {
-        return equipId;
-    }
-
-    public void setEquipId(Integer equipId) {
-        this.equipId = equipId;
-    }
-
-    public String getEquipImg() {
-        return equipImg;
-    }
-
-    public void setEquipImg(String equipImg) {
-        this.equipImg = equipImg;
-    }
-
-    public Integer getConsumption() {
-        return consumption;
-    }
-
-    public void setConsumption(Integer consumption) {
-        this.consumption = consumption;
-    }
-
-    public String getAttributeExpression() {
-        return attributeExpression;
-    }
-
-    public void setAttributeExpression(String attributeExpression) {
-        this.attributeExpression = attributeExpression;
-    }
+    /**
+     * 子装备，id列表
+     */
+    private String subEquips;
 
 }
 

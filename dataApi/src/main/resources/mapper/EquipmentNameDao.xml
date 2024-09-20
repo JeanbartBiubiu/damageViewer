@@ -3,9 +3,9 @@
 <mapper namespace="xyz.game.dao.EquipmentNameDao">
 
     <resultMap type="xyz.game.entity.EquipmentName" id="EquipmentNameMap">
-        <result property="equipId" column="equip_id" jdbcType="INTEGER"/>
+        <result property="equipmentId" column="equip_id" jdbcType="INTEGER"/>
         <result property="languageId" column="language_id" jdbcType="INTEGER"/>
-        <result property="equipName" column="equip_name" jdbcType="VARCHAR"/>
+        <result property="equipmentName" column="equip_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -53,8 +53,8 @@ equip_idlanguage_idequip_name
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="equipId" useGeneratedKeys="true">
-        insert into ${whichGame}.equipment_name(equip_name)
-        values (#{equipName})
+        insert into ${whichGame}.equipment_name(equip_id,language_id,equip_name)
+        values (#{equipmentId},#{languageId},#{equipmentName})
     </insert>
 
     <insert id="insertBatch" keyProperty="equipId" useGeneratedKeys="true">
@@ -79,11 +79,11 @@ equip_name = values(equip_name)
     <update id="update">
         update ${whichGame}.equipment_name
         <set>
-            <if test="equipName != null and equipName != ''">
-                equip_name = #{equipName},
+            <if test="equipmentName != null and equipmentName != ''">
+                equip_name = #{equipmentName},
             </if>
         </set>
-        where equip_id = #{equipId}
+        where equip_id = #{equipmentId}
     </update>
 
     <!--通过主键删除-->

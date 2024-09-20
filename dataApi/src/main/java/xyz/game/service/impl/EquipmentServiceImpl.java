@@ -1,12 +1,18 @@
 package xyz.game.service.impl;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
+import xyz.game.dao.EquipmentNameDao;
 import xyz.game.entity.Equipment;
 import xyz.game.dao.EquipmentDao;
+import xyz.game.entity.EquipmentName;
+import xyz.game.entity.custom.EquipmentReq;
 import xyz.game.service.EquipmentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +25,8 @@ import java.util.List;
 public class EquipmentServiceImpl implements EquipmentService {
     @Resource
     private EquipmentDao equipmentDao;
+    @Resource
+    private EquipmentNameDao equipmentNameDao;
 
     /**
      * 通过ID查询单条数据
@@ -27,8 +35,17 @@ public class EquipmentServiceImpl implements EquipmentService {
      * @return 实例对象
      */
     @Override
-    public Equipment queryById(Integer equipId) {
-        return this.equipmentDao.queryById(equipId);
+    public EquipmentReq queryById(Integer equipId) {
+        Equipment equipment = this.equipmentDao.queryById(equipId);
+        EquipmentReq equipmentReq1 = new EquipmentReq();
+        BeanUtils.copyProperties(equipment,equipmentReq1);
+        equipmentReq1.setSubEquips(new ArrayList<>());
+        if (equipment.getSubEquips() != null) {
+            for (String s : equipment.getSubEquips().split(",")) {
+                equipmentReq1.getSubEquips().add(s);
+            }
+        }
+        return equipmentReq1;
     }
 
     /**
@@ -38,8 +55,23 @@ public class EquipmentServiceImpl implements EquipmentService {
      * @return 查询结果
      */
     @Override
-    public List<Equipment> query(Equipment equipment) {
-        return this.equipmentDao.query(equipment);
+    public List<EquipmentReq> query(EquipmentReq equipmentReq) {
+        Equipment req = new Equipment();
+        BeanUtils.copyProperties(equipmentReq,req);
+        List<Equipment> query = this.equipmentDao.query(req);
+        List<EquipmentReq> list = new ArrayList<>();
+        for (Equipment equipment : query) {
+            EquipmentReq equipmentReq1 = new EquipmentReq();
+            BeanUtils.copyProperties(equipment,equipmentReq1);
+            equipmentReq1.setSubEquips(new ArrayList<>());
+            if (equipment.getSubEquips() != null) {
+                for (String s : equipment.getSubEquips().split(",")) {
+                    equipmentReq1.getSubEquips().add(s);
+                }
+            }
+            list.add(equipmentReq1);
+        }
+        return list;
     }
 
     /**
@@ -49,9 +81,20 @@ public class EquipmentServiceImpl implements EquipmentService {
      * @return 实例对象
      */
     @Override
-    public Equipment insert(Equipment equipment) {
-        this.equipmentDao.insert(equipment);
-        return equipment;
+    @Transactional
+    public EquipmentReq insert(EquipmentReq equipment) {
+        Integer id = this.equipmentDao.maxId()+1;
+
+        Equipment equipment1 = new Equipment();
+        BeanUtils.copyProperties(equipment,equipment1);
+        equipment1.setEquipmentId(id);
+        this.equipmentDao.insert(equipment1);
+        EquipmentName equipmentName = new EquipmentName();
+        BeanUtils.copyProperties(equipment,equipmentName);
+        equipmentName.setEquipmentId(id);
+        equipmentName.setLanguageId(1);
+        this.equipmentNameDao.insert(equipmentName);
+        return this.queryById(id);
     }
 
     /**
@@ -61,9 +104,15 @@ public class EquipmentServiceImpl implements EquipmentService {
      * @return 实例对象
      */
     @Override
-    public Equipment update(Equipment equipment) {
-        this.equipmentDao.update(equipment);
-        return this.queryById(equipment.getEquipId());
+    @Transactional
+    public EquipmentReq update(EquipmentReq equipment) {
+        Equipment equipment1 = new Equipment();
+        BeanUtils.copyProperties(equipment,equipment1);
+        this.equipmentDao.update(equipment1);
+        EquipmentName equipmentName = new EquipmentName();
+        BeanUtils.copyProperties(equipment,equipmentName);
+        this.equipmentNameDao.update(equipmentName);
+        return this.queryById(equipment.getEquipmentId());
     }
 
     /**
