@@ -1,6 +1,7 @@
 package xyz.game.service;
 
 import xyz.game.entity.SkillSub;
+import xyz.game.entity.custom.SkillReq;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface SkillSubService {
      * @param skillSub 筛选条件
      * @return 查询结果
      */
-    List<SkillSub> query(SkillSub skillSub);
+    List<SkillReq> query(SkillReq skill);
 
     /**
      * 新增数据

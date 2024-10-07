@@ -1,6 +1,10 @@
 package xyz.game.controller;
 
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.SkillSub;
+import xyz.game.entity.custom.AttributeReq;
+import xyz.game.entity.custom.SkillReq;
 import xyz.game.service.SkillSubService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +20,7 @@ import java.util.List;
  * @since 2024-06-23 21:23:34
  */
 @RestController
-@RequestMapping("skillSub")
+@RequestMapping("skill")
 public class SkillSubController {
     /**
      * 服务对象
@@ -27,12 +31,16 @@ public class SkillSubController {
     /**
      * 分页查询
      *
-     * @param skillSub 筛选条件
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<SkillSub>> query(SkillSub skillSub) {
-        return ResponseEntity.ok(this.skillSubService.query(skillSub));
+    public ResponseEntity<ResponseData<DataWithPage<SkillReq>>> query(SkillReq skill) {
+        ResponseData<DataWithPage<SkillReq>> resp = new ResponseData<>();
+        DataWithPage<SkillReq> data = new DataWithPage<>();
+        data.setList(this.skillSubService.query(skill));
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**

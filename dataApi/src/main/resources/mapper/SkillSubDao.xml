@@ -11,6 +11,19 @@
         <result property="checkAndDo" column="check_and_do" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap type="xyz.game.entity.custom.SkillReq" id="SkillMap">
+        <result property="skillId" column="skill_id" jdbcType="INTEGER"/>
+        <result property="skillName" column="skill_name" jdbcType="VARCHAR"/>
+        <result property="skillImg" column="skill_img" jdbcType="VARCHAR"/>
+        <result property="skillLevel" column="skill_levle" jdbcType="INTEGER"/>
+        <result property="skillType" column="skill_type" jdbcType="INTEGER"/>
+        <result property="skillConsumption" column="consumption" jdbcType="VARCHAR"/>
+        <result property="skillCd" column="cd" jdbcType="VARCHAR"/>
+        <result property="skillCheckAndDo" column="check_and_do" jdbcType="VARCHAR"/>
+        <result property="skillCastPoint" column="cast_point" jdbcType="VARCHAR"/>
+        <result property="skillCastPointAfter" column="cast_point_after" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <!--查询单个-->
     <select id="queryById" resultMap="SkillSubMap">
         select
@@ -20,19 +33,18 @@ skill_idskill_levlecycle_idconsumptioncdcheck_and_do
     </select>
 
     <!--查询指定行数据-->
-    <select id="query" resultMap="SkillSubMap">
+    <select id="query" resultMap="SkillMap">
         select
-skill_idskill_levlecycle_idconsumptioncdcheck_and_do
-        from ${whichGame}.skill_sub
+        a.*,b.*
+        from ${whichGame}.skill_def a
+        left join ${whichGame}.skill_sub b
+        on a.skill_id = b.skill_id
         <where>
             <if test="skillId != null">
                 and skill_id = #{skillId}
             </if>
             <if test="skillLevle != null">
                 and skill_levle = #{skillLevle}
-            </if>
-            <if test="cycleId != null">
-                and cycle_id = #{cycleId}
             </if>
             <if test="consumption != null and consumption != ''">
                 and consumption = #{consumption}

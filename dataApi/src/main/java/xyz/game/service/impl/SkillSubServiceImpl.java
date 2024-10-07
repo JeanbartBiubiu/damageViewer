@@ -2,6 +2,7 @@ package xyz.game.service.impl;
 
 import xyz.game.entity.SkillSub;
 import xyz.game.dao.SkillSubDao;
+import xyz.game.entity.custom.SkillReq;
 import xyz.game.service.SkillSubService;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,8 @@ public class SkillSubServiceImpl implements SkillSubService {
      * @return 查询结果
      */
     @Override
-    public List<SkillSub> query(SkillSub skillSub) {
-        return this.skillSubDao.query(skillSub);
+    public List<SkillReq> query(SkillReq skill) {
+        return this.skillSubDao.query(skill);
     }
 
     /**

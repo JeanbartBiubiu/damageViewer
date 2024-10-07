@@ -2,6 +2,8 @@ package xyz.game.dao;
 
 import xyz.game.entity.SkillSub;
 import org.apache.ibatis.annotations.Param;
+import xyz.game.entity.custom.SkillReq;
+
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ public interface SkillSubDao {
      * @param skillSub 查询条件
      * @return 对象列表
      */
-    List<SkillSub> query(SkillSub skillSub);
+    List<SkillReq> query(SkillReq skill);
 
     /**
      * 统计总行数
