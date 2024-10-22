@@ -3,6 +3,9 @@ server:
   port: 8888
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     # 定义项目名称
     name: damageViewer
