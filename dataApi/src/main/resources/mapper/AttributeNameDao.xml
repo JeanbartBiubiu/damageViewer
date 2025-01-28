@@ -12,7 +12,7 @@
     <select id="queryById" resultMap="AttributeNameMap">
         select
             attribute_id,language_id,attribute_name
-        from ${whichGame}.attribute_name
+        from attribute_name
             where attribute_id = #{attributeId}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="query" resultMap="AttributeNameMap">
         select
 attribute_idlanguage_idattribute_name
-        from ${whichGame}.attribute_name
+        from attribute_name
         <where>
             <if test="attributeId != null">
                 and attribute_id = #{attributeId}
@@ -37,7 +37,7 @@ attribute_idlanguage_idattribute_name
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
-        from ${whichGame}.attribute_name
+        from attribute_name
         <where>
             <if test="attributeId != null">
                 and attribute_id = #{attributeId}
@@ -53,12 +53,12 @@ attribute_idlanguage_idattribute_name
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into ${whichGame}.attribute_name(attribute_id,attribute_name)
+        insert into attribute_name(attribute_id,attribute_name)
         values (#{attributeId},#{attributeName})
     </insert>
 
     <insert id="insertBatch" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute_name(attribute_name)
+        insert into attribute_name(attribute_name)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.attributeName})
@@ -66,7 +66,7 @@ attribute_idlanguage_idattribute_name
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute_name(attribute_name)
+        insert into attribute_name(attribute_name)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.attributeName})
@@ -77,7 +77,7 @@ attribute_name = values(attribute_name)
 
     <!--通过主键修改数据-->
     <update id="update">
-        update ${whichGame}.attribute_name
+        update attribute_name
         <set>
             <if test="attributeName != null and attributeName != ''">
                 attribute_name = #{attributeName},
@@ -88,7 +88,7 @@ attribute_name = values(attribute_name)
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from ${whichGame}.attribute_name where attribute_id = #{attributeId}
+        delete from attribute_name where attribute_id = #{attributeId}
     </delete>
 
 </mapper>

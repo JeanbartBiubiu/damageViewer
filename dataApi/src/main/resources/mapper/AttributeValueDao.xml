@@ -13,7 +13,7 @@
     <select id="queryById" resultMap="AttributeValueMap">
         select
 indiv_id,attribute_id,level_id,value
-        from ${whichGame}.attribute_value
+        from attribute_value
         where indiv_id = #{indivId}
     </select>
 
@@ -21,7 +21,7 @@ indiv_id,attribute_id,level_id,value
     <select id="query" resultMap="AttributeValueMap">
         select
 indiv_idattribute_idlevel_idvalue
-        from ${whichGame}.attribute_value
+        from attribute_value
         <where>
             <if test="indivId != null">
                 and indiv_id = #{indivId}
@@ -41,7 +41,7 @@ indiv_idattribute_idlevel_idvalue
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
-        from ${whichGame}.attribute_value
+        from attribute_value
         <where>
             <if test="indivId != null">
                 and indiv_id = #{indivId}
@@ -60,13 +60,13 @@ indiv_idattribute_idlevel_idvalue
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute_value(indiv_idattribute_idlevel_idvalue)
+        insert into attribute_value(indiv_idattribute_idlevel_idvalue)
         values (#{indivId}#{attributeId}#{levelId}#{value})
     </insert>
 
     <insert id="insertBatch">
         insert into
-        ${whichGame}.attribute_value(indiv_id,attribute_id,level_id,value)
+        attribute_value(indiv_id,attribute_id,level_id,value)
             values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.indivId},#{entity.attributeId},#{entity.levelId},#{entity.value})
@@ -74,7 +74,7 @@ indiv_idattribute_idlevel_idvalue
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute_value(indiv_idattribute_idlevel_idvalue)
+        insert into attribute_value(indiv_idattribute_idlevel_idvalue)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.indivId}#{entity.attributeId}#{entity.levelId}#{entity.value})
@@ -85,7 +85,7 @@ indiv_id = values(indiv_id)attribute_id = values(attribute_id)level_id = values(
 
     <!--通过主键修改数据-->
     <update id="update">
-        update ${whichGame}.attribute_value
+        update attribute_value
         <set>
             <if test="indivId != null">
                 indiv_id = #{indivId},
@@ -105,13 +105,13 @@ indiv_id = values(indiv_id)attribute_id = values(attribute_id)level_id = values(
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from ${whichGame}.attribute_value where  = #{}
+        delete from attribute_value where  =
     </delete>
 
 
     <delete id="deleteByIndivId">
         delete
-            from ${whichGame}.attribute_value
+            from attribute_value
         where
             indiv_id = #{id}
     </delete>

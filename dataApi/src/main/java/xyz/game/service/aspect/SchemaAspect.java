@@ -1,4 +1,4 @@
-package xyz.game.dao.aspect;
+package xyz.game.service.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -6,12 +6,13 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import xyz.game.dao.SchemaDao;
-import xyz.game.entity.EmptyDaoObject;
+import xyz.game.util.ThreadLocalUtil;
 
 
 @Aspect
 @Component
 public class SchemaAspect {
+    InheritableThreadLocal<String> schema = new InheritableThreadLocal<>();
     private final SchemaDao schemaDao;
 
     public SchemaAspect(SchemaDao schemaDao) {
@@ -28,6 +29,7 @@ public class SchemaAspect {
     @Before("includePointcut()")
     public void beforeAdvice(JoinPoint joinPoint) {
         // TODO 需要一个处理，每次请求只执行一次
-        schemaDao.chooseSchema("default_table");
+        String currentSchema = ThreadLocalUtil.getOrDefault("currentSchema","default_table");
+        schemaDao.chooseSchema(currentSchema);
     }
 }
