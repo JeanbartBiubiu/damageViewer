@@ -12,7 +12,7 @@
     <select id="queryById" resultMap="AttributeMap">
         select
             attribute_id,attribute_img
-        from ${whichGame}.attribute
+        from attribute
         where attribute_id = #{attributeId}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="query" resultMap="AttributeMap">
         select
 attribute_id,attribute_img
-        from ${whichGame}.attribute
+        from attribute
         <where>
             <if test="attributeId != null">
                 and attribute_id = #{attributeId}
@@ -34,8 +34,8 @@ attribute_id,attribute_img
     <select id="queryJoin" resultMap="AttributeMap">
         select
         a.attribute_id,attribute_img,b.attribute_name
-        from ${whichGame}.attribute a
-            left join ${whichGame}.attribute_name b
+        from attribute a
+            left join attribute_name b
         on a.attribute_id = b.attribute_id
         <where>
             <if test="attributeId != null and attributeId != ''">
@@ -56,7 +56,7 @@ attribute_id,attribute_img
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
-        from ${whichGame}.attribute
+        from attribute
         <where>
             <if test="attributeId != null">
                 and attribute_id = #{attributeId}
@@ -69,17 +69,17 @@ attribute_id,attribute_img
 
     <select id="maxId" resultType="java.lang.Integer">
         select max(attribute_id)
-        from ${whichGame}.attribute
+        from attribute
     </select>
 
     <!--新增所有列-->
     <insert id="insert" parameterType="xyz.game.entity.Attribute">
-        insert into ${whichGame}.attribute(attribute_id,attribute_img)
+        insert into attribute(attribute_id,attribute_img)
         values (#{attributeId},#{attributeImg})
     </insert>
 
     <insert id="insertBatch" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute(attribute_img)
+        insert into attribute(attribute_img)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.attributeImg})
@@ -87,7 +87,7 @@ attribute_id,attribute_img
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="attributeId" useGeneratedKeys="true">
-        insert into ${whichGame}.attribute(attribute_img)
+        insert into attribute(attribute_img)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.attributeImg})
@@ -98,7 +98,7 @@ attribute_img = values(attribute_img)
 
     <!--通过主键修改数据-->
     <update id="update">
-        update ${whichGame}.attribute
+        update attribute
         <set>
             <if test="attributeImg != null and attributeImg != ''">
                 attribute_img = #{attributeImg},
@@ -109,7 +109,7 @@ attribute_img = values(attribute_img)
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from ${whichGame}.attribute where attribute_id = #{attributeId}
+        delete from attribute where attribute_id = #{attributeId}
     </delete>
 
 </mapper>
