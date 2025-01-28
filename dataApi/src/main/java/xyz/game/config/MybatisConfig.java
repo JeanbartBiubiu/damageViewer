@@ -20,6 +20,7 @@ public class MybatisConfig {
         Consumer<Map<String, Object>> consumer = map -> {
             // 基本信息
             map.putIfAbsent("whichGame", "default_table");
+            map.putIfAbsent("currentSchema", "default_table");
         };
         return new MyBatisPlugin(consumer);
     }
