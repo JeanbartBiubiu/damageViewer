@@ -34,12 +34,14 @@ public class ThreadLocalUtil {
         return s == null ? defaultValue : s;
     }
 
+    /**
+     * todo 虚拟线程打开时，需要测试多线程的影响
+     */
     public static void remove() {
-        ThreadLocal<Map<String, String>> objectThreadLocal = new ThreadLocal<>();
-        Map<String, String> stringStringMap = objectThreadLocal.get();
+        Map<String, String> stringStringMap = threadLocal.get();
         if (stringStringMap != null) {
-            objectThreadLocal.get().clear();
+            threadLocal.get().clear();
         }
-        objectThreadLocal.remove();
+        threadLocal.remove();
     }
 }
