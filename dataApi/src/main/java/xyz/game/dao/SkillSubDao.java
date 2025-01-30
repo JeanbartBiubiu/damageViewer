@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface SkillSubDao {
 
+    int maxId();
+
     /**
      * 通过ID查询单条数据
      *

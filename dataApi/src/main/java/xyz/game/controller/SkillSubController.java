@@ -61,8 +61,10 @@ public class SkillSubController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<SkillSub> add(SkillSub skillSub) {
-        return ResponseEntity.ok(this.skillSubService.insert(skillSub));
+    public ResponseEntity<ResponseData<SkillSub>> add(@RequestBody SkillSub skillSub) {
+        ResponseData<SkillSub> resp = new ResponseData<>();
+        resp.setData(this.skillSubService.insert(skillSub));
+        return ResponseEntity.ok(resp);
     }
 
     /**

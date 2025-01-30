@@ -51,6 +51,8 @@ public class SkillSubServiceImpl implements SkillSubService {
      */
     @Override
     public SkillSub insert(SkillSub skillSub) {
+        Integer id = this.skillSubDao.maxId()+1;
+        skillSub.setSkillId(id);
         this.skillSubDao.insert(skillSub);
         return skillSub;
     }
