@@ -38,10 +38,10 @@ public class ThreadLocalUtil {
      * todo 虚拟线程打开时，需要测试多线程的影响
      */
     public static void remove() {
-        Map<String, String> stringStringMap = threadLocal.get();
+        /*Map<String, String> stringStringMap = threadLocal.get();
         if (stringStringMap != null) {
-            threadLocal.get().clear();
-        }
+            stringStringMap.clear();
+        }*/
         threadLocal.remove();
     }
 }
