@@ -13,28 +13,9 @@ import java.util.List;
 public interface VersionDao {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param versionId 主键
      * @return 实例对象
      */
-    Version queryById(Integer versionId);
-
-    /**
-     * 查询指定行数据
-     *
-     * @param version 查询条件
-     * @return 对象列表
-     */
-    List<Version> query(Version version);
-
-    /**
-     * 统计总行数
-     *
-     * @param version 查询条件
-     * @return 总行数
-     */
-    long count(Version version);
+    Version queryNewest();
 
     /**
      * 新增数据
@@ -43,23 +24,6 @@ public interface VersionDao {
      * @return 影响行数
      */
     int insert(Version version);
-
-    /**
-     * 批量新增数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<Version> 实例对象列表
-     * @return 影响行数
-     */
-    int insertBatch(@Param("entities") List<Version> entities);
-
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<Version> 实例对象列表
-     * @return 影响行数
-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-     */
-    int insertOrUpdateBatch(@Param("entities") List<Version> entities);
 
     /**
      * 修改数据

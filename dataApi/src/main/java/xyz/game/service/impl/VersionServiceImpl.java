@@ -23,23 +23,11 @@ public class VersionServiceImpl implements VersionService {
     /**
      * 通过ID查询单条数据
      *
-     * @param versionId 主键
      * @return 实例对象
      */
     @Override
-    public Version queryById(Integer versionId) {
-        return this.versionDao.queryById(versionId);
-    }
-
-    /**
-     * 分页查询
-     *
-     * @param version 筛选条件
-     * @return 查询结果
-     */
-    @Override
-    public List<Version> query(Version version) {
-        return this.versionDao.query(version);
+    public Version queryNowVersion() {
+        return this.versionDao.queryNewest();
     }
 
     /**
@@ -58,12 +46,10 @@ public class VersionServiceImpl implements VersionService {
      * 修改数据
      *
      * @param version 实例对象
-     * @return 实例对象
      */
     @Override
-    public Version update(Version version) {
+    public void update(Version version) {
         this.versionDao.update(version);
-        return this.queryById(version.getVersionId());
     }
 
     /**
