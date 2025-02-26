@@ -1,13 +1,15 @@
 package xyz.game.service.impl;
 
+import xyz.game.dao.IndividualDao;
 import xyz.game.entity.IndivName;
 import xyz.game.dao.IndivNameDao;
+import xyz.game.entity.Individual;
 import xyz.game.service.IndivNameService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (IndivName)表服务实现类
@@ -17,8 +19,14 @@ import java.util.List;
  */
 @Service("indivNameService")
 public class IndivNameServiceImpl implements IndivNameService {
-    @Resource
-    private IndivNameDao indivNameDao;
+    private final IndivNameDao indivNameDao;
+
+    private final IndividualDao individualDao;
+
+    public IndivNameServiceImpl(IndivNameDao indivNameDao, IndividualDao individualDao) {
+        this.indivNameDao = indivNameDao;
+        this.individualDao = individualDao;
+    }
 
     /**
      * 通过ID查询单条数据
@@ -39,7 +47,14 @@ public class IndivNameServiceImpl implements IndivNameService {
      */
     @Override
     public List<IndivName> query(IndivName indivName) {
-        return this.indivNameDao.query(indivName);
+        List<IndivName> query = this.indivNameDao.query(indivName);
+        List<IndivName> queryImg = this.indivNameDao.queryImg(indivName);
+        Map<Integer, String> map = new HashMap<>();
+        queryImg.forEach(name -> map.put(name.getIndivId(), name.getIndivImg()));
+        for (IndivName item : query) {
+            item.setIndivImg(map.get(item.getIndivId()));
+        }
+        return query;
     }
 
     /**
@@ -70,6 +85,10 @@ public class IndivNameServiceImpl implements IndivNameService {
     @Override
     public IndivName update(IndivName indivName) {
         this.indivNameDao.update(indivName);
+        Individual individual = new Individual();
+        individual.setIndivId(indivName.getIndivId());
+        individual.setIndivImg(indivName.getIndivImg());
+        this.individualDao.update(individual);
         return this.queryById(indivName.getIndivId());
     }
 

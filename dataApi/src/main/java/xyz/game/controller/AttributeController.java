@@ -6,8 +6,7 @@ import xyz.game.entity.custom.AttributeReq;
 import xyz.game.service.AttributeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
+import xyz.game.service.IndividualService;
 
 import java.util.List;
 
@@ -23,8 +22,14 @@ public class AttributeController {
     /**
      * 服务对象
      */
-    @Resource
-    private AttributeService attributeService;
+    private final AttributeService attributeService;
+
+    private final IndividualService individualService;
+
+    public AttributeController(AttributeService attributeService, IndividualService individualService) {
+        this.attributeService = attributeService;
+        this.individualService = individualService;
+    }
 
     /**
      * 分页查询
@@ -36,7 +41,8 @@ public class AttributeController {
     public ResponseEntity<ResponseData<DataWithPage<AttributeReq>>> query(AttributeReq attribute) {
         ResponseData<DataWithPage<AttributeReq>> resp = new ResponseData<>();
         DataWithPage<AttributeReq> data = new DataWithPage<>();
-        data.setList(this.attributeService.query(attribute));
+        List<AttributeReq> query = this.attributeService.query(attribute);
+        data.setList(query);
         data.setTotal(data.getList().size());
         resp.setData(data);
         return ResponseEntity.ok(resp);

@@ -18,14 +18,11 @@ indiv_idindiv_img
     <!--查询指定行数据-->
     <select id="query" resultMap="IndividualMap">
         select
-indiv_idindiv_img
-        from ${whichGame}.individual
+            indiv_id,indiv_img
+        from individual
         <where>
             <if test="indivId != null">
                 and indiv_id = #{indivId}
-            </if>
-            <if test="indivImg != null and indivImg != ''">
-                and indiv_img = #{indivImg}
             </if>
         </where>
     </select>
@@ -70,7 +67,7 @@ indiv_img = values(indiv_img)
 
     <!--通过主键修改数据-->
     <update id="update">
-        update ${whichGame}.individual
+        update individual
         <set>
             <if test="indivImg != null and indivImg != ''">
                 indiv_img = #{indivImg},

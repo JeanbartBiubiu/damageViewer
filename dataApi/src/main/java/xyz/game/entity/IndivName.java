@@ -1,5 +1,7 @@
 package xyz.game.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-06-23 21:23:34
  */
+@Data
 public class IndivName implements Serializable {
     private static final long serialVersionUID = -75171202507033402L;
 
@@ -17,30 +20,7 @@ public class IndivName implements Serializable {
 
     private String indivName;
 
-
-    public Integer getIndivId() {
-        return indivId;
-    }
-
-    public void setIndivId(Integer indivId) {
-        this.indivId = indivId;
-    }
-
-    public Integer getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(Integer languageId) {
-        this.languageId = languageId;
-    }
-
-    public String getIndivName() {
-        return indivName;
-    }
-
-    public void setIndivName(String indivName) {
-        this.indivName = indivName;
-    }
+    private String indivImg;
 
 }
 

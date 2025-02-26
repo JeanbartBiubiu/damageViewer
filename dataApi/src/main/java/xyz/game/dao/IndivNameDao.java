@@ -29,6 +29,7 @@ public interface IndivNameDao {
      * @return 对象列表
      */
     List<IndivName> query(IndivName indivName);
+    List<IndivName> queryImg(IndivName indivName);
 
     /**
      * 统计总行数

@@ -6,6 +6,7 @@
         <result property="indivId" column="indiv_id" jdbcType="INTEGER"/>
         <result property="languageId" column="language_id" jdbcType="INTEGER"/>
         <result property="indivName" column="indiv_name" jdbcType="VARCHAR"/>
+        <result property="indivImg" column="indiv_img" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="maxId" resultType="java.lang.Integer">
@@ -26,7 +27,7 @@
     <select id="query" resultMap="IndivNameMap">
         select
         indiv_id,language_id,indiv_name
-        from ${whichGame}.indiv_name
+        from indiv_name
         <where>
             <if test="indivId != null">
                 and indiv_id = #{indivId}
@@ -36,6 +37,17 @@
             </if>
             <if test="indivName != null and indivName != ''">
                 and indiv_name = #{indivName}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryImg" resultMap="IndivNameMap">
+        select
+        indiv_id,indiv_img
+        from individual
+        <where>
+            <if test="indivId != null">
+                and indiv_id = #{indivId}
             </if>
         </where>
     </select>
