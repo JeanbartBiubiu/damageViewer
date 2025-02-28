@@ -17,7 +17,7 @@ public class AllInfo {
     }
 
     /**
-     * 获取所有信息,数据是gzip压缩的，需要前端自己解压
+     * 获取所有信息
      */
     @RequestMapping("/getAllInfo")
     public ResponseEntity<ResponseData<String>> getAllInfo() {
