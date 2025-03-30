@@ -23,10 +23,9 @@ public interface GameInfoDao {
     /**
      * 查询指定行数据
      *
-     * @param gameInfo 查询条件
      * @return 对象列表
      */
-    List<GameInfo> query(GameInfo gameInfo);
+    List<GameInfo> query();
 
     /**
      * 统计总行数

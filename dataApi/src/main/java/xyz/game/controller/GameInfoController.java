@@ -1,5 +1,7 @@
 package xyz.game.controller;
 
+import xyz.game.controller.global.DataWithPage;
+import xyz.game.controller.global.ResponseData;
 import xyz.game.entity.GameInfo;
 import xyz.game.service.GameInfoService;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +29,17 @@ public class GameInfoController {
     /**
      * 分页查询
      *
-     * @param gameInfo 筛选条件
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<GameInfo>> query(GameInfo gameInfo) {
-        return ResponseEntity.ok(this.gameInfoService.query(gameInfo));
+    public ResponseEntity<ResponseData<DataWithPage<GameInfo>>> query() {
+        ResponseData<DataWithPage<GameInfo>> resp = new ResponseData<>();
+        DataWithPage<GameInfo> data = new DataWithPage<>();
+        List<GameInfo> query = this.gameInfoService.query();
+        data.setList(query);
+        data.setTotal(data.getList().size());
+        resp.setData(data);
+        return ResponseEntity.ok(resp);
     }
 
     /**

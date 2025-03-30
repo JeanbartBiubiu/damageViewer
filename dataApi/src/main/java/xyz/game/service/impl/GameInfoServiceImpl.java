@@ -40,12 +40,11 @@ public class GameInfoServiceImpl implements GameInfoService {
     /**
      * 分页查询
      *
-     * @param gameInfo 筛选条件
      * @return 查询结果
      */
     @Override
-    public List<GameInfo> query(GameInfo gameInfo) {
-        return this.gameInfoDao.query(gameInfo);
+    public List<GameInfo> query() {
+        return this.gameInfoDao.query();
     }
 
     /**

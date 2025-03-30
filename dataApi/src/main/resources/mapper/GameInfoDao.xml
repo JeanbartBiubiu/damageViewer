@@ -20,22 +20,8 @@ game_idgame_codegame_namegame_img
     <!--查询指定行数据-->
     <select id="query" resultMap="GameInfoMap">
         select
-game_id,game_code,game_name,game_img
+            game_id,game_code,game_name,game_img
         from default_table.game_info
-        <where>
-            <if test="gameId != null">
-                and game_id = #{gameId}
-            </if>
-            <if test="gameCode != null and gameCode != ''">
-                and game_code = #{gameCode}
-            </if>
-            <if test="gameName != null and gameName != ''">
-                and game_name = #{gameName}
-            </if>
-            <if test="gameImg != null and gameImg != ''">
-                and game_img = #{gameImg}
-            </if>
-        </where>
     </select>
 
     <!--统计总行数-->

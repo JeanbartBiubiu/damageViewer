@@ -23,10 +23,9 @@ public interface GameInfoService {
     /**
      * 分页查询
      *
-     * @param gameInfo 筛选条件
      * @return 查询结果
      */
-    List<GameInfo> query(GameInfo gameInfo);
+    List<GameInfo> query();
 
     /**
      * 新增数据
