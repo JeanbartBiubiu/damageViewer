@@ -1,5 +1,7 @@
 package xyz.game.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -11,26 +13,15 @@ import java.io.Serializable;
 public class EquipId implements Serializable {
     private static final long serialVersionUID = -61531836822009450L;
 
+    @TableId
     private Integer equipId;
 
-    private Integer skillId;
+    @TableId
+    private Integer attributeId;
 
+    private Long addValue;
 
-    public Integer getEquipId() {
-        return equipId;
-    }
-
-    public void setEquipId(Integer equipId) {
-        this.equipId = equipId;
-    }
-
-    public Integer getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(Integer skillId) {
-        this.skillId = skillId;
-    }
+    private Double multiValue;
 
 }
 

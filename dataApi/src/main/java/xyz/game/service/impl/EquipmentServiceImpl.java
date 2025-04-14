@@ -2,7 +2,9 @@ package xyz.game.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
+import xyz.game.dao.EquipIdDao;
 import xyz.game.dao.EquipmentNameDao;
+import xyz.game.entity.EquipId;
 import xyz.game.entity.Equipment;
 import xyz.game.dao.EquipmentDao;
 import xyz.game.entity.EquipmentName;
@@ -27,6 +29,8 @@ public class EquipmentServiceImpl implements EquipmentService {
     private EquipmentDao equipmentDao;
     @Resource
     private EquipmentNameDao equipmentNameDao;
+    @Resource
+    private EquipIdDao equipIdDao;
 
     /**
      * 通过ID查询单条数据
@@ -39,12 +43,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         Equipment equipment = this.equipmentDao.queryById(equipId);
         EquipmentReq equipmentReq1 = new EquipmentReq();
         BeanUtils.copyProperties(equipment,equipmentReq1);
-        equipmentReq1.setSubEquips(new ArrayList<>());
-        if (equipment.getSubEquips() != null) {
-            for (String s : equipment.getSubEquips().split(",")) {
-                equipmentReq1.getSubEquips().add(s);
-            }
-        }
         return equipmentReq1;
     }
 
@@ -63,12 +61,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         for (Equipment equipment : query) {
             EquipmentReq equipmentReq1 = new EquipmentReq();
             BeanUtils.copyProperties(equipment,equipmentReq1);
-            equipmentReq1.setSubEquips(new ArrayList<>());
-            if (equipment.getSubEquips() != null) {
-                for (String s : equipment.getSubEquips().split(",")) {
-                    equipmentReq1.getSubEquips().add(s);
-                }
-            }
             list.add(equipmentReq1);
         }
         return list;
@@ -94,6 +86,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         equipmentName.setEquipmentId(id);
         equipmentName.setLanguageId(1);
         this.equipmentNameDao.insert(equipmentName);
+
+        this.equipIdDao.insert(equipment.getEquipIds());
         return this.queryById(id);
     }
 
@@ -112,6 +106,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         EquipmentName equipmentName = new EquipmentName();
         BeanUtils.copyProperties(equipment,equipmentName);
         this.equipmentNameDao.update(equipmentName);
+        this.equipIdDao.insertOrUpdate(equipment.getEquipIds());
         return this.queryById(equipment.getEquipmentId());
     }
 
