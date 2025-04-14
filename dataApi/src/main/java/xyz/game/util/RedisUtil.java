@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
     public static final String PV = "PV";
-    public static final String UV = "uv";
+    public static final String UV = "UV";
 
     private final StringRedisTemplate stringRedisTemplate;
 

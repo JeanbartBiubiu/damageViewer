@@ -10,7 +10,6 @@ import xyz.game.util.RedisUtil;
 import xyz.game.util.SpringContextUtil;
 
 @SpringBootApplication
-@MapperScan("com.baomidou.mybatisplus.samples.quickstart.mapper")
 @MapperScan("xyz.game.dao")
 @EnableScheduling
 public class Application {
