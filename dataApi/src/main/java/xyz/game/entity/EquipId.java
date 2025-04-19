@@ -1,6 +1,7 @@
 package xyz.game.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,13 +11,13 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-06-23 21:23:34
  */
+@Data
 public class EquipId implements Serializable {
     private static final long serialVersionUID = -61531836822009450L;
 
     @TableId
     private Integer equipId;
 
-    @TableId
     private Integer attributeId;
 
     private Long addValue;

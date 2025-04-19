@@ -52,8 +52,10 @@ public class EquipmentController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<EquipmentReq> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.equipmentService.queryById(id));
+    public ResponseEntity<ResponseData<EquipmentReq>> queryById(@PathVariable("id") Integer id) {
+        ResponseData<EquipmentReq> resp = new ResponseData<>();
+        resp.setData(this.equipmentService.queryById(id));
+        return ResponseEntity.ok(resp);
     }
 
     /**

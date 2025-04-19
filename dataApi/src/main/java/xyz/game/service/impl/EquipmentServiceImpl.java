@@ -1,5 +1,6 @@
 package xyz.game.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.game.dao.EquipIdDao;
@@ -43,6 +44,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         Equipment equipment = this.equipmentDao.queryById(equipId);
         EquipmentReq equipmentReq1 = new EquipmentReq();
         BeanUtils.copyProperties(equipment,equipmentReq1);
+        List<EquipId> equipIds = this.equipIdDao.selectList(new QueryWrapper<EquipId>().eq("equip_id", equipId));
+        equipmentReq1.setEquipIds(equipIds);
         return equipmentReq1;
     }
 
@@ -86,7 +89,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         equipmentName.setEquipmentId(id);
         equipmentName.setLanguageId(1);
         this.equipmentNameDao.insert(equipmentName);
-
         this.equipIdDao.insert(equipment.getEquipIds());
         return this.queryById(id);
     }
@@ -106,7 +108,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         EquipmentName equipmentName = new EquipmentName();
         BeanUtils.copyProperties(equipment,equipmentName);
         this.equipmentNameDao.update(equipmentName);
-        this.equipIdDao.insertOrUpdate(equipment.getEquipIds());
+        this.equipIdDao.delete(new QueryWrapper<EquipId>().eq("equip_id",equipment.getEquipmentId()));
+        this.equipIdDao.insert(equipment.getEquipIds());
         return this.queryById(equipment.getEquipmentId());
     }
 
@@ -118,6 +121,8 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public boolean deleteById(Integer equipId) {
+        this.equipIdDao.delete(new QueryWrapper<EquipId>().eq("equip_id",equipId));
+        this.equipmentNameDao.deleteById(equipId);
         return this.equipmentDao.deleteById(equipId) > 0;
     }
 }
