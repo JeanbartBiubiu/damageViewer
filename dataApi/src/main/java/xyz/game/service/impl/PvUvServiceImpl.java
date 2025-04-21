@@ -18,6 +18,10 @@ public class PvUvServiceImpl extends ServiceImpl<PvUvMapper, PvUv> implements Pv
 
     @Override
     public void savePvUvData(Long hour, Long pv, Long uv) {
+        PvUv hour1 = this.getOne(new QueryWrapper<PvUv>().ge("hour", hour));
+        if (hour1 != null) {
+            return;
+        }
         PvUv pvUv = new PvUv();
         pvUv.setHour(hour);
         pvUv.setPv(pv);
@@ -33,7 +37,7 @@ public class PvUvServiceImpl extends ServiceImpl<PvUvMapper, PvUv> implements Pv
         // 示例中假设 PvUvMapper 有一个方法来查询近 30 天的数据
         return this.baseMapper.selectList(
                 new QueryWrapper<PvUv>()
-                        .ge("hour", thirtyDaysAgo.toEpochSecond(ZoneOffset.UTC))
+                        .ge("hour", thirtyDaysAgo.toEpochSecond(ZoneOffset.UTC)/3600000)
         );
     }
 }

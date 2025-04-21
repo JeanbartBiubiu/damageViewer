@@ -2,6 +2,7 @@ package xyz.game.entity;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,10 +14,10 @@ public class TypeDTO {
     /**
      * 类型信息
      */
-    private Type type;
+    private Type type = new Type();
     
     /**
      * 父类型ID列表
      */
-    private List<Long> parentTypeIds;
+    private List<Long> parentTypeIds = new ArrayList<>();
 } 
