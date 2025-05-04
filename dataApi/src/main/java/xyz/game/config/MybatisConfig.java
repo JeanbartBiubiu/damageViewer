@@ -33,6 +33,18 @@ public class MybatisConfig {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
+            if (tableName.equals("game_info")) {
+                return "default_table." + tableName;
+            }
+            if (tableName.equals("email")) {
+                return "email." + tableName;
+            }
+            if (tableName.equals("pv_uv")) {
+                return "default_table." + tableName;
+            }
+            if (tableName.contains(".")) {
+                return tableName;
+            }
             // 邮箱和游戏管理表额外处理
             String schema = ThreadLocalUtil.getOrDefault("currentSchema","default_table");
             return schema+"."+tableName;

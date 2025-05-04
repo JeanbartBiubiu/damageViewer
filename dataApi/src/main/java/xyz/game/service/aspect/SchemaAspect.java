@@ -30,6 +30,6 @@ public class SchemaAspect {
     public void beforeAdvice(JoinPoint joinPoint) {
         // TODO 需要一个处理，每次请求只执行一次
         String currentSchema = ThreadLocalUtil.getOrDefault("currentSchema","default_table");
-        // schemaDao.chooseSchema(currentSchema);
+        schemaDao.chooseSchema(currentSchema);
     }
 }
