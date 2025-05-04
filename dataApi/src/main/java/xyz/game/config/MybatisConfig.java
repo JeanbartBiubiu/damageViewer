@@ -1,7 +1,10 @@
 package xyz.game.config;
 
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import xyz.game.util.ThreadLocalUtil;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -23,6 +26,19 @@ public class MybatisConfig {
             map.putIfAbsent("currentSchema", "default_table");
         };
         return new MyBatisPlugin(consumer);
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
+        dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
+            // 邮箱和游戏管理表额外处理
+            String schema = ThreadLocalUtil.getOrDefault("currentSchema","default_table");
+            return schema+"."+tableName;
+        });
+        interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+        return interceptor;
     }
 
 }
