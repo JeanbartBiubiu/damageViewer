@@ -12,7 +12,7 @@
     <select id="queryById" resultMap="LevelMap">
         select
             level_id,language_id,level_name
-        from ${whichGame}.level
+        from level
         where level_id = #{levelId}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="query" resultMap="LevelMap">
         select
             level_id,language_id,level_name
-        from ${whichGame}.level
+        from level
         <where>
             <if test="levelId != null">
                 and level_id = #{levelId}
@@ -37,7 +37,7 @@
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
-        from ${whichGame}.level
+        from level
         <where>
             <if test="levelId != null">
                 and level_id = #{levelId}
@@ -53,17 +53,17 @@
 
     <select id="maxId" resultType="java.lang.Integer">
         select max(level_id)
-        from ${whichGame}.level
+        from level
     </select>
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into ${whichGame}.level(level_id,level_name)
+        insert into level(level_id,level_name)
         values (#{levelId},#{levelName})
     </insert>
 
     <insert id="insertBatch" keyProperty="levelId" useGeneratedKeys="true">
-        insert into ${whichGame}.level(level_name)
+        insert into level(level_name)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.levelName})
@@ -71,7 +71,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="levelId" useGeneratedKeys="true">
-        insert into ${whichGame}.level(level_name)
+        insert into level(level_name)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.levelName})
@@ -82,7 +82,7 @@ level_name = values(level_name)
 
     <!--通过主键修改数据-->
     <update id="update">
-        update ${whichGame}.level
+        update level
         <set>
             <if test="levelName != null and levelName != ''">
                 level_name = #{levelName},
@@ -93,7 +93,7 @@ level_name = values(level_name)
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from ${whichGame}.level where level_id = #{levelId}
+        delete from level where level_id = #{levelId}
     </delete>
 
 </mapper>

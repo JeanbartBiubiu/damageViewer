@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.game.controller.global.ResponseData;
 import xyz.game.controller.login.SSOBody;
+import xyz.game.entity.custom.JwtBody;
 import xyz.game.service.EmailService;
 
 /**
@@ -34,11 +35,11 @@ public class GoogleLoginController {
     @PostMapping("token")
     public ResponseEntity<ResponseData<String>> query(@RequestBody SSOBody ssoBody) {
         ResponseData<String> resp = new ResponseData<>();
-        String token = emailService.googleLogin(ssoBody.getToken(), ssoBody.getEmail());
-        if (token == null) {
+        JwtBody jwtBody = emailService.googleLogin(ssoBody.getJwt());
+        if (jwtBody == null) {
             return ResponseEntity.badRequest().build();
         }
-        resp.setData(token);
+        resp.setData(jwtBody.getToken());
         return ResponseEntity.ok(resp);
     }
 

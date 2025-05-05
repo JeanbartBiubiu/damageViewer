@@ -8,9 +8,11 @@ import com.huawei.agconnect.server.commons.exception.AGCException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import xyz.game.dao.EmailMapper;
 import xyz.game.entity.Email;
+import xyz.game.entity.custom.JwtBody;
 import xyz.game.service.EmailService;
 import xyz.game.util.RedisUtil;
 
@@ -43,9 +45,9 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
     }
 
     @Override
-    public String huaweiLogin(String token, String email) {
-        boolean b = verifyHuaweiJwt(token, HuaweiProductId, HuaweiPublicKey);
-        if (b) {
+    public JwtBody huaweiLogin(String jwt) {
+        String email = verifyHuaweiJwt(jwt, HuaweiProductId, HuaweiPublicKey);
+        if (!Strings.isEmpty(email)) {
             // 更新token
             Email dbRecord = this.getOne(new QueryWrapper<Email>().eq("email_address", email));
             if (dbRecord == null) {
@@ -63,14 +65,18 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 this.updateById(dbRecord);
             }
             redisUtil.setWithExpire("token." + dbRecord.getToken(), "00", 3600 * 24 * 14);
-            return dbRecord.getToken();
+            JwtBody jwtBody = new JwtBody();
+            jwtBody.setToken(dbRecord.getToken());
+            jwtBody.setCanEdit(dbRecord.getCanEdit());
+            jwtBody.setPay(dbRecord.getPay());
+            return jwtBody;
         }
         return null;
     }
 
     @Override
-    public String googleLogin(String token, String email) {
-        boolean b = verifyGoogleJwt(token, GoogleProductId);
+    public JwtBody googleLogin(String jwt) {
+        /*boolean b = verifyGoogleJwt(token, GoogleProductId);
         if (b) {
             // 更新token
             Email dbRecord = this.getOne(new QueryWrapper<Email>().eq("email_address", email));
@@ -90,7 +96,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
             }
             redisUtil.setWithExpire("token." + dbRecord.getToken(), "00", 3600 * 24 * 14);
             return dbRecord.getToken();
-        }
+        }*/
         return null;
     }
 
@@ -100,10 +106,10 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
         return base64Encoder.encodeToString(randomBytes);
     }
 
-    private boolean verifyHuaweiJwt(String token, String productId,String pubKeyStr) {
+    private String verifyHuaweiJwt(String token, String productId,String pubKeyStr) {
         String[] field = token.split( "\\.");
         if (field.length != 3) {
-            return false;
+            return null;
         }
         String payLoadStr = new String(Base64.getUrlDecoder().decode(field[1]), StandardCharsets.UTF_8);
         JSONObject payLoad = JSON.parseObject(payLoadStr);
@@ -112,19 +118,19 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
         LocalDateTime expTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
         // 验证token是否已过期
         if (LocalDateTime.now(ZoneId.of("UTC")).isAfter(expTime)) {
-            return false;
+            // return null;
         }
         // 验证是否是本项目的token
         if (!productId.equals(payLoad.getString("aud"))) {
-            return false;
+            return null;
         }
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            Key publicKey = keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getUrlDecoder().decode(pubKeyStr)));
+            Key publicKey = keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(pubKeyStr)));
             Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(token);
-            return true;
+            return payLoad.getString("email");
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 
