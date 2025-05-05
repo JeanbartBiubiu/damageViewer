@@ -208,15 +208,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <jvmArguments>
-                        --add-exports=java.base/sun.net.www=ALL-UNNAMED
-                    </jvmArguments>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>

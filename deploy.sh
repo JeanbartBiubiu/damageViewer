@@ -2,6 +2,7 @@
 
 # 定义第一个同步函数
 sync_jar() {
+    ssh root@qingliang 'sh /root/docker/stop.sh'
     rclone sync ./dataApi/target/dataApi-1.0-SNAPSHOT.jar qingliang:/root/docker/
 }
 
