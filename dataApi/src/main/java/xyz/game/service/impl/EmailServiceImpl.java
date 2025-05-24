@@ -64,7 +64,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 dbRecord.setToken(createToken());
                 this.updateById(dbRecord);
             }
-            redisUtil.setWithExpire("token." + dbRecord.getToken(), "00", 3600 * 24 * 14);
+            redisUtil.setWithExpire("token." + dbRecord.getToken(), dbRecord.getCanEdit() + "" + dbRecord.getPay(), 3600 * 24 * 14);
             JwtBody jwtBody = new JwtBody();
             jwtBody.setToken(dbRecord.getToken());
             jwtBody.setCanEdit(dbRecord.getCanEdit());
@@ -106,8 +106,8 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
         return base64Encoder.encodeToString(randomBytes);
     }
 
-    private String verifyHuaweiJwt(String token, String productId,String pubKeyStr) {
-        String[] field = token.split( "\\.");
+    private String verifyHuaweiJwt(String token, String productId, String pubKeyStr) {
+        String[] field = token.split("\\.");
         if (field.length != 3) {
             return null;
         }
@@ -135,7 +135,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
     }
 
     private boolean verifyGoogleJwt(String jwt, String productId) {
-        String[] field = jwt.split( "\\.");
+        String[] field = jwt.split("\\.");
         if (field.length != 3) {
             return false;
         }

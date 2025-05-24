@@ -53,14 +53,14 @@ skill_idskilllLevelcycle_idconsumptioncdcheck_and_do
             <if test="skillLevel != null">
                 and skilll_Level = #{skillLevel}
             </if>
-            <if test="consumption != null and consumption != ''">
-                and consumption = #{consumption}
+            <if test="skillConsumption != null and skillConsumption != ''">
+                and consumption = #{skillConsumption}
             </if>
-            <if test="cd != null and cd != ''">
-                and cd = #{cd}
+            <if test="skillCd != null and skillCd != ''">
+                and cd = #{skillCd}
             </if>
-            <if test="checkAndDo != null and checkAndDo != ''">
-                and check_and_do = #{checkAndDo}
+            <if test="skillCheckAndDo != null and skillCheckAndDo != ''">
+                and check_and_do = #{skillCheckAndDo}
             </if>
         </where>
     </select>
@@ -79,14 +79,14 @@ skill_idskilllLevelcycle_idconsumptioncdcheck_and_do
             <if test="cycleId != null">
                 and cycle_id = #{cycleId}
             </if>
-            <if test="consumption != null and consumption != ''">
-                and consumption = #{consumption}
+            <if test="skillConsumption != null and skillConsumption != ''">
+                and consumption = #{skillConsumption}
             </if>
-            <if test="cd != null and cd != ''">
-                and cd = #{cd}
+            <if test="skillCd != null and skillCd != ''">
+                and cd = #{skillCd}
             </if>
-            <if test="checkAndDo != null and checkAndDo != ''">
-                and check_and_do = #{checkAndDo}
+            <if test="skillCheckAndDo != null and skillCheckAndDo != ''">
+                and check_and_do = #{skillCheckAndDo}
             </if>
         </where>
     </select>
@@ -122,11 +122,11 @@ consumption = values(consumption)cd = values(cd)check_and_do = values(check_and_
             <if test="consumption != null and consumption != ''">
                 consumption = #{consumption},
             </if>
-            <if test="cd != null and cd != ''">
-                cd = #{cd},
+            <if test="skillCd != null and skillCd != ''">
+                cd = #{skillCd},
             </if>
-            <if test="checkAndDo != null and checkAndDo != ''">
-                check_and_do = #{checkAndDo},
+            <if test="skillCheckAndDo != null and skillCheckAndDo != ''">
+                check_and_do = #{skillCheckAndDo},
             </if>
         </set>
         where skill_id = #{skillId}
