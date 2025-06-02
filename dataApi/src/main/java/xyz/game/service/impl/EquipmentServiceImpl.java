@@ -43,7 +43,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     public EquipmentReq queryById(Integer equipId) {
         Equipment equipment = this.equipmentDao.queryById(equipId);
         EquipmentReq equipmentReq1 = new EquipmentReq();
-        BeanUtils.copyProperties(equipment,equipmentReq1);
+        BeanUtils.copyProperties(equipment, equipmentReq1);
         List<EquipId> equipIds = this.equipIdDao.selectList(new QueryWrapper<EquipId>().eq("equip_id", equipId));
         equipmentReq1.setEquipIds(equipIds);
         return equipmentReq1;
@@ -58,12 +58,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public List<EquipmentReq> query(EquipmentReq equipmentReq) {
         Equipment req = new Equipment();
-        BeanUtils.copyProperties(equipmentReq,req);
+        BeanUtils.copyProperties(equipmentReq, req);
         List<Equipment> query = this.equipmentDao.query(req);
         List<EquipmentReq> list = new ArrayList<>();
         for (Equipment equipment : query) {
             EquipmentReq equipmentReq1 = new EquipmentReq();
-            BeanUtils.copyProperties(equipment,equipmentReq1);
+            BeanUtils.copyProperties(equipment, equipmentReq1);
             list.add(equipmentReq1);
         }
         return list;
@@ -78,18 +78,25 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     @Transactional
     public EquipmentReq insert(EquipmentReq equipment) {
-        Integer id = this.equipmentDao.maxId()+1;
+        Integer i = this.equipmentDao.maxId();
+        if (i == null) {
+            i = 0;
+        }
+        Integer id = i + 1;
 
         Equipment equipment1 = new Equipment();
-        BeanUtils.copyProperties(equipment,equipment1);
+        BeanUtils.copyProperties(equipment, equipment1);
         equipment1.setEquipmentId(id);
         this.equipmentDao.insert(equipment1);
         EquipmentName equipmentName = new EquipmentName();
-        BeanUtils.copyProperties(equipment,equipmentName);
+        BeanUtils.copyProperties(equipment, equipmentName);
         equipmentName.setEquipmentId(id);
         equipmentName.setLanguageId(1);
         this.equipmentNameDao.insert(equipmentName);
-        this.equipIdDao.insert(equipment.getEquipIds());
+        if (equipment.getEquipIds() != null) {
+            equipment.getEquipIds().forEach(equipId -> equipId.setEquipId(id));
+            this.equipIdDao.insert(equipment.getEquipIds());
+        }
         return this.queryById(id);
     }
 
@@ -103,12 +110,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Transactional
     public EquipmentReq update(EquipmentReq equipment) {
         Equipment equipment1 = new Equipment();
-        BeanUtils.copyProperties(equipment,equipment1);
+        BeanUtils.copyProperties(equipment, equipment1);
         this.equipmentDao.update(equipment1);
         EquipmentName equipmentName = new EquipmentName();
-        BeanUtils.copyProperties(equipment,equipmentName);
+        BeanUtils.copyProperties(equipment, equipmentName);
         this.equipmentNameDao.update(equipmentName);
-        this.equipIdDao.delete(new QueryWrapper<EquipId>().eq("equip_id",equipment.getEquipmentId()));
+        this.equipIdDao.delete(new QueryWrapper<EquipId>().eq("equip_id", equipment.getEquipmentId()));
         this.equipIdDao.insert(equipment.getEquipIds());
         return this.queryById(equipment.getEquipmentId());
     }
@@ -121,7 +128,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public boolean deleteById(Integer equipId) {
-        this.equipIdDao.delete(new QueryWrapper<EquipId>().eq("equip_id",equipId));
+        this.equipIdDao.delete(new QueryWrapper<EquipId>().eq("equip_id", equipId));
         this.equipmentNameDao.deleteById(equipId);
         return this.equipmentDao.deleteById(equipId) > 0;
     }

@@ -14,6 +14,7 @@ public class EquipmentReq {
     private String equipmentImg;
 
     private Integer consumption;
+    private String attributeExpression;
 
     private List<EquipId> equipIds;
 

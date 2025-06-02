@@ -18,10 +18,10 @@ public interface EquipmentDao {
     /**
      * 通过ID查询单条数据
      *
-     * @param equipId 主键
+     * @param equipmentId 主键
      * @return 实例对象
      */
-    Equipment queryById(Integer equipId);
+    Equipment queryById(Integer equipmentId);
 
     /**
      * 查询指定行数据

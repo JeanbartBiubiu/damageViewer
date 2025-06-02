@@ -19,6 +19,7 @@ public class Equipment implements Serializable {
     private String equipmentImg;
     private String equipmentName;
 
+    // 价格
     private Integer consumption;
 /**
      * 增加的属性数值表达式

@@ -70,7 +70,11 @@ public class MyBatisPlugin implements Interceptor {
                 }catch (Exception e){
                     // 转换失败，新取自定义map，将其直接塞到自定义的map里
                     MyParamMap<Object> myParamMap = new MyParamMap<>();
-                    myParamMap.put(defaultKey,args[1].toString());
+                    if (args[1] instanceof Integer){
+                        myParamMap.put(defaultKey,args[1]);
+                    } else {
+                        myParamMap.put(defaultKey,args[1].toString());
+                    }
                     paramMap = myParamMap;
                 }
             }
